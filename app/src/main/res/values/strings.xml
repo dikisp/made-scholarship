@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Our President</string>
+    <string name="list">List</string>
+    <string name="gird">Gird</string>
+    <string name="with_cardview">with_Cardview</string>
 </resources>
