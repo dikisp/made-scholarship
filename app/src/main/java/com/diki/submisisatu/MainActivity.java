@@ -14,6 +14,11 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     private RecyclerView rvCategory;
     private ArrayList<President> list = new ArrayList<>();
+    private String title = "Move list";
+    final String STATE_TITLE = "state_string";
+    final String STATE_LIST = "state_list";
+    final String STATE_MODE = "state_mode";
+    int mode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,9 +28,35 @@ public class MainActivity extends AppCompatActivity {
         rvCategory = findViewById(R.id.rv_category);
         rvCategory.setHasFixedSize(true);
 
-        list.addAll(PresidentData.getListData());
-        showRecyclerList();
+//        list.addAll(PresidentData.getListData());
+//        showRecyclerList();
+
+        //untuk menampilkan data ketika ada orientasi layar
+
+        list = new ArrayList<>();
+        if (savedInstanceState == null){
+            setActionBarTitle("Mode List");
+            list.addAll(PresidentData.getListData());
+            showRecyclerList();
+            mode = R.id.action_list;
+        }else
+        {
+            String stateTitle = savedInstanceState.getString(STATE_TITLE);
+                ArrayList<President> stateList = savedInstanceState.getParcelableArrayList(STATE_LIST);
+                int stateMode = savedInstanceState.getInt(STATE_MODE);
+                setActionBarTitle(stateTitle);
+                list.addAll(stateList);
+//                setMode(stateMode);
+        }
     }
+
+//    @Override
+//    private void onSavedInstanceState(Bundle outState){
+//        super.onSavedInstanceState(outState);
+//        outState.putString(STATE_TITLE, getSupportActionBar().getTitle().toString());
+//        outState.putParcelableArrayList(STATE_LIST, list);
+//        outState.putInt(STATE_MODE, mode);
+//    }
 
 
     private void showRecyclerList() {
@@ -35,10 +66,14 @@ public class MainActivity extends AppCompatActivity {
         rvCategory.setAdapter(ListPresidentAdapter);
     }
 
+    private void setActionBarTitle(String title){
+        getSupportActionBar().setTitle(title);
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -47,21 +82,33 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_list:
+                setActionBarTitle("Mode List");
                 showRecyclerList();
                 break;
             case R.id.action_gird:
+                setActionBarTitle("Mode Grid");
                 showRecyclerGrid();
                 break;
             case R.id.action_cardview:
+                setActionBarTitle("Mode CardView");
+                showReciclerCardView();
                 break;
         }
+
         return super.onOptionsItemSelected(item);
     }
 
     private void showRecyclerGrid(){
         rvCategory.setLayoutManager(new GridLayoutManager(this, 2));
-        GridPresidentAdapter gridPresidentAdapter = new GridPresidentAdapter();
+        GridPresidentAdapter gridPresidentAdapter = new GridPresidentAdapter(this);
         gridPresidentAdapter.setListPresident(list);
         rvCategory.setAdapter(gridPresidentAdapter);
+    }
+
+    private void  showReciclerCardView(){
+        rvCategory.setLayoutManager(new LinearLayoutManager(this));
+        CardViewPresidentAdapter cardViewPresidentAdapter = new CardViewPresidentAdapter(this);
+        cardViewPresidentAdapter.setListPresident(list);
+        rvCategory.setAdapter(cardViewPresidentAdapter);
     }
 }

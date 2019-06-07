@@ -20,8 +20,8 @@ public class PresidentData {
       for (String[] aData : data){
           president = new President();
           president.setName(aData[0]);
-          president.setRemarks(aData[0]);
-          president.setPhoto(aData[0]);
+          president.setRemarks(aData[1]);
+          president.setPhoto(aData[2]);
 
           list.add(president);
       }

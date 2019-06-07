@@ -84,7 +84,6 @@ RecyclerView.Adapter<CardViewPresidentAdapter.CardViewViewHolder> {
             tvRemarks = itemView.findViewById(R.id.tv_item_remarks);
             btnFavorite = itemView.findViewById(R.id.btn_set_favorite);
             btnShare = itemView.findViewById(R.id.btn_set_share);
-
         }
     }
 }
