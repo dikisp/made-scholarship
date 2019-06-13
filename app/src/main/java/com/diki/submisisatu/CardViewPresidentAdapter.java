@@ -1,6 +1,10 @@
 package com.diki.submisisatu;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,12 +19,14 @@ import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
 
+import static android.support.v4.content.ContextCompat.startActivity;
 
-public class CardViewPresidentAdapter extends
-RecyclerView.Adapter<CardViewPresidentAdapter.CardViewViewHolder> {
+
+public class CardViewPresidentAdapter extends RecyclerView.Adapter<CardViewPresidentAdapter.CardViewViewHolder> {
     private Context context;
     private ArrayList<President> listPresident;
     private ArrayList<President> getListPresident;
+
     private ArrayList<President> getListPresident(){
         return listPresident;
     }
@@ -31,13 +37,19 @@ RecyclerView.Adapter<CardViewPresidentAdapter.CardViewViewHolder> {
         this.context = context;
     }
 
+
+
     @NonNull
     @Override
     public CardViewViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view =
                 LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_cardview_president, viewGroup, false);
         return new CardViewViewHolder(view);
+
     }
+
+
+
 
     @Override
     public void onBindViewHolder(@NonNull   CardViewViewHolder cardViewViewHolder, int i) {
@@ -55,7 +67,7 @@ RecyclerView.Adapter<CardViewPresidentAdapter.CardViewViewHolder> {
                         CustomOnItemClickListener(i, new CustomOnItemClickListener.OnItemClickCallBack() {
                     @Override
                     public void onItemClicked(View view, int position) {
-                        Toast.makeText(context, "Favorite"+getListPresident().get(position).getName(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Favorite "+getListPresident().get(position).getName(), Toast.LENGTH_SHORT).show();
                     }
                 }));
 
@@ -63,7 +75,8 @@ RecyclerView.Adapter<CardViewPresidentAdapter.CardViewViewHolder> {
                 CustomOnItemClickListener(i, new CustomOnItemClickListener.OnItemClickCallBack() {
             @Override
             public void onItemClicked(View view, int position) {
-                Toast.makeText(context, "Favorite"+getListPresident().get(position).getName(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Share "+getListPresident().get(position).getName(), Toast.LENGTH_SHORT).show();
+
             }
         }));
     }
@@ -76,6 +89,7 @@ RecyclerView.Adapter<CardViewPresidentAdapter.CardViewViewHolder> {
     class CardViewViewHolder extends RecyclerView.ViewHolder{
         ImageView imgPhoto;
         TextView tvName, tvRemarks;
+        CardView cardView;
         Button btnFavorite, btnShare;
         CardViewViewHolder (View itemView){
             super(itemView);
@@ -84,6 +98,20 @@ RecyclerView.Adapter<CardViewPresidentAdapter.CardViewViewHolder> {
             tvRemarks = itemView.findViewById(R.id.tv_item_remarks);
             btnFavorite = itemView.findViewById(R.id.btn_set_favorite);
             btnShare = itemView.findViewById(R.id.btn_set_share);
+            cardView = itemView.findViewById(R.id.card_view);
+            cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent();
+                    switch (view.getId()){
+                        case R.id.img_item_foto:
+                             intent = new Intent(context, DetailHokage.class);
+                            break;
+                    }
+                    context.startActivity(intent);
+                }
+            });
+
         }
     }
 }
