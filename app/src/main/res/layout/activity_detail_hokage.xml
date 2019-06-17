@@ -53,14 +53,20 @@
         android:id="@+id/deskripsi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Deskipsi" />
+        android:text="Deskipsi"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"/>
 
 
         <TextView
             android:id="@+id/val_wafat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="12 Agustus" />
+            android:text="12 Agustus"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"/>
 
 
     <TextView
@@ -68,13 +74,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/lahir"
-        android:text="01 Januari" />
+        android:text="01 Januari"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"/>
 
     <TextView
         android:id="@+id/val_tinggi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
         android:layout_toEndOf="@+id/lahir"
         android:text="170 cm" />
 
