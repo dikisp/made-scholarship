@@ -60,7 +60,7 @@ public class listPresidentAdapter extends RecyclerView.Adapter<listPresidentAdap
 
     public class CategoryViewHolder extends RecyclerView.ViewHolder {
         TextView tvName;
-        TextView tvRemarks;
+        TextView tvRemarks, tvDeskripsi, tvLahir, tvWafat;
         ImageView imgPhoto;
 
         public CategoryViewHolder(@NonNull View itemView) {

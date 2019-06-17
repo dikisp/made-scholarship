@@ -5,7 +5,11 @@ import android.os.Parcelable;
 
 
 public class President implements Parcelable {
-    private String name, remarks, photo;
+    private String name, remarks, photo,deskripsi,lahir,wafat,tinggi;
+
+    public President() {
+    }
+
 
     public String getName() {
         return name;
@@ -31,38 +35,74 @@ public class President implements Parcelable {
         this.photo = photo;
     }
 
+    public String getDeskripsi() {
+        return deskripsi;
+    }
+
+    public void setDeskripsi(String deskripsi) {
+        this.deskripsi = deskripsi;
+    }
+
+    public String getLahir() {
+        return lahir;
+    }
+
+    public void setLahir(String lahir) {
+        this.lahir = lahir;
+    }
+
+    public String getWafat() {
+        return wafat;
+    }
+
+    public void setWafat(String wafat) {
+        this.wafat = wafat;
+    }
+
+    public String getTinggi() {
+        return tinggi;
+    }
+
+    public void setTinggi(String tinggi) {
+        this.tinggi = tinggi;
+    }
+
     @Override
     public int describeContents() {
         return 0;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.name);
-        dest.writeString(this.remarks);
-        dest.writeString(this.photo);
+
+    protected President(Parcel in) {
+        name = in.readString();
+        remarks = in.readString();
+        photo = in.readString();
+        deskripsi = in.readString();
+        lahir = in.readString();
+        wafat = in.readString();
+        tinggi = in.readString();
     }
 
-    public President(){
-
-    }
-
-    protected President(Parcel in){
-        this.name = in.readString();
-        this.remarks = in.readString();
-        this.photo = in.readString();
-    }
-
-    public static final Parcelable.Creator<President> CREATOR = new Parcelable.Creator<President>(){
-
+    public static final Creator<President> CREATOR = new Creator<President>() {
         @Override
-        public President createFromParcel(Parcel parcel) {
-            return new President(parcel);
+        public President createFromParcel(Parcel in) {
+            return new President(in);
         }
 
         @Override
-        public President[] newArray(int i) {
-            return new President[i];
+        public President[] newArray(int size) {
+            return new President[size];
         }
     };
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(name);
+        parcel.writeString(remarks);
+        parcel.writeString(photo);
+        parcel.writeString(deskripsi);
+        parcel.writeString(lahir);
+        parcel.writeString(wafat);
+        parcel.writeString(tinggi);
+    }
 }

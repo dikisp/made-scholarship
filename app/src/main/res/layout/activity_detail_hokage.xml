@@ -1,53 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/activity_vertical_margin">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/img_item_foto"
-        android:layout_width="85dp"
-        android:layout_height="85dp"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        tools:src="@android:color/darker_gray"/>
 
-    <LinearLayout
-        android:layout_toEndOf="@+id/img_item_foto"
-        android:layout_toRightOf="@+id/img_item_foto"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_centerVertical="true"
-        android:id="@+id/line1">
+        android:padding="@dimen/activity_vertical_margin">
 
-        <TextView
-            android:id="@+id/tv_item_name"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img_foto"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            tools:src="@android:color/darker_gray" />
+
+        <LinearLayout
+            android:id="@+id/line1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="Soekarno"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:layout_marginBottom="8dp"
-            />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_item_remarks"
-            tools:text="Presiden RI Pertama"/>
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/img_foto"
+            android:layout_toRightOf="@+id/img_foto"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:text="Soekarno" />
+
+            <TextView
+                android:id="@+id/tv_position"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="Presiden RI Pertama" />
 
 
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/deskripsi"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Deskipsi" />
+    </RelativeLayout>
 
+    <TextView
+        android:id="@+id/deskripsi"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:text="Deskipsi" />
 
 
         <TextView
@@ -56,21 +62,21 @@
             android:layout_height="wrap_content"
             android:text="12 Agustus" />
 
-        <TextView
-            android:id="@+id/val_lahir"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
 
-            android:layout_toEndOf="@+id/lahir"
-            android:text="01 Januari" />
+    <TextView
+        android:id="@+id/val_lahir"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/lahir"
+        android:text="01 Januari" />
+
+    <TextView
+        android:id="@+id/val_tinggi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_toEndOf="@+id/lahir"
+        android:text="170 cm" />
 
 
-
-
-    </LinearLayout>
-
-
-
-
-
-</RelativeLayout>
+</LinearLayout>
