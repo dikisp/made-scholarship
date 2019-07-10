@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Catalogue Movie</string>
+    <string name="list">List</string>
+    <string name="gird">Gird</string>
+    <string name="with_cardview">With Cardview</string>
+    <string name="share">Share</string>
+    <string name="favorite">Favorite</string>
+</resources>
