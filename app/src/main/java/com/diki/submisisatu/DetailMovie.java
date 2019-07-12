@@ -17,40 +17,36 @@ import java.util.Objects;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class DetailMovie extends AppCompatActivity {
-    TextView Nama, position, Deskripsi, lahir, wafat, tinggi;
-    ImageView imageView;
+    TextView  title, genre, release, deskripsi, rating, income, produksi;
+    CircleImageView circleImageView;
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_movie);
 
 
-        imageView = findViewById(R.id.img_foto);
-        Nama = findViewById(R.id.tv_name);
-        position = findViewById(R.id.tv_position);
-        Deskripsi = findViewById(R.id.deskripsi);
-        lahir = findViewById(R.id.val_lahir);
-        wafat = findViewById(R.id.val_wafat);
-        tinggi = findViewById(R.id.val_tinggi);
+        circleImageView = findViewById(R.id.PosterMovie);
+        title = findViewById(R.id.movieName);
+        genre = findViewById(R.id.movieGenre);
+        deskripsi = findViewById(R.id.tvOverview);
+        release = findViewById(R.id.dateRelease);
+        produksi = findViewById(R.id.movieProduction);
+        rating = findViewById(R.id.movieRating);
+        income = findViewById(R.id.movieIncome);
 
         Intent intent = getIntent();
         Movie data = intent.getParcelableExtra(Utils.parcel);
 
         Glide.with(this).load(data.getPoster())
-                .into(imageView);
-
-        Log.d("Naga", "nama: " + intent.getStringExtra(Utils.name) + " Position : " + intent.getStringExtra(Utils.position)
-                + "URL GAMBAR : " + intent.getStringExtra(Utils.imagePhoto));
-
-        Nama.setText("Judul : " + data.getTitle());
-        position.setText("Genre : " + data.getGenre());
-        Deskripsi.setText("Deskripsi : " + data.getDeskripsi());
-        lahir.setText("Release : " + data.getRealese());
-        wafat.setText("Produksi : " + data.getPruduksi());
-        tinggi.setText("Rating : " + data.getRating());
-
+                .into(circleImageView);
+        title.setText(data.getTitle());
+        genre.setText( data.getGenre());
+        deskripsi.setText(data.getDeskripsi());
+        release.setText(data.getRealese());
+        produksi.setText(data.getPruduksi());
+        rating.setText(data.getRating());
+        income.setText(data.getIncome());
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }

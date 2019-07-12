@@ -34,6 +34,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:height="64dp"
             android:id="@+id/tv_item_remarks"
             tools:text="Aladin adalah film yang mendandung film kekartunanan dimanan aktor utamanya merupakan bukan orang yang beneran atau."/>
     </LinearLayout>

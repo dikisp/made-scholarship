@@ -91,14 +91,14 @@ public class Movie implements Parcelable {
 
 
     protected Movie(Parcel in) {
-        title = in.readString();
-        genre = in.readString();
-        poster = in.readString();
-        deskripsi = in.readString();
-        realese = in.readString();
-        pruduksi = in.readString();
-        rating = in.readString();
-        income = in.readString();
+        this.title = in.readString();
+        this.genre = in.readString();
+        this.poster = in.readString();
+        this.deskripsi = in.readString();
+        this.realese = in.readString();
+        this.pruduksi = in.readString();
+        this.rating = in.readString();
+        this.income = in.readString();
     }
 
     public static final Creator<Movie> CREATOR = new Creator<Movie>() {

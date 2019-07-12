@@ -33,19 +33,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         rvCategory = findViewById(R.id.lv_category);
         rvCategory.setHasFixedSize(true);
 
-//        btnIntent = findViewById(R.id.card_view);
-
-//        list.addAll(MovieData.getListData());
-//        showRecyclerList();
-
-        //untuk menampilkan data ketika ada orientasi layar
 
         list = new ArrayList<>();
         if (savedInstanceState == null){
             setActionBarTitle("Catalogue Movie");
             list.addAll(MovieData.getListData());
             showRecyclerList();
-//            showReciclerCardView();
             mode = R.id.action_list;
         }else
         {
@@ -58,10 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    //back button
 
-
-    //metode intent
     @Override
     public void onClick(View view) {
         switch (view.getId()){
@@ -72,7 +62,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    //metode untuk menampilkan pemilihan
     private void showSelectedPresident(Movie movie){
         Toast.makeText(this, "Kamu memilih "+ movie.getTitle(), Toast.LENGTH_SHORT).show();
     }

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -28,7 +29,7 @@ public class listMovieAdapter extends RecyclerView.Adapter<listMovieAdapter.Cate
         return listMovie;
     }
 
-    public void setListMovie(ArrayList<Movie> listMovie) {
+    public void setListMovie(ArrayList<Movie> listMovie)  {
         this.listMovie = listMovie;
     }
 
@@ -45,8 +46,9 @@ public class listMovieAdapter extends RecyclerView.Adapter<listMovieAdapter.Cate
 
     @Override
     public void onBindViewHolder(@NonNull CategoryViewHolder categoryViewHolder, final int position) {
+
         categoryViewHolder.tvName.setText(getListMovie().get(position).getTitle());
-        categoryViewHolder.tvRemarks.setText(getListMovie().get(position).getGenre());
+        categoryViewHolder.tvRemarks.setText(getListMovie().get(position).getDeskripsi());
 
         Glide.with(context)
                 .load(getListMovie().get(position).getPoster())
@@ -57,14 +59,7 @@ public class listMovieAdapter extends RecyclerView.Adapter<listMovieAdapter.Cate
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, DetailMovie.class);
-//                intent.putExtra(Utils.imagePhoto,p.getPhoto());
-//                intent.putExtra(Utils.name,p.getName());
-//                intent.putExtra(Utils.position,p.getRemarks());
-//                intent.putExtra(Utils.lahir,p.getLahir());
-//                intent.putExtra(Utils.wafat,p.getWafat());
-//                intent.putExtra(Utils.tinggi,p.getTinggi());
-//
-                intent.putExtra(Utils.parcel,position);
+                intent.putExtra(Utils.parcel,listMovie.get(position));
                 context.startActivity(intent);
             }
         });
@@ -77,8 +72,9 @@ public class listMovieAdapter extends RecyclerView.Adapter<listMovieAdapter.Cate
 
     public class CategoryViewHolder extends RecyclerView.ViewHolder {
         TextView tvName;
-        TextView tvRemarks, tvDeskripsi, tvLahir, tvWafat;
+        TextView tvRemarks;
         ImageView imgPhoto;
+        RecyclerView listView;
 
         public CategoryViewHolder(@NonNull View itemView) {
             super(itemView);
