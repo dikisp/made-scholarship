@@ -74,7 +74,6 @@ public class listMovieAdapter extends RecyclerView.Adapter<listMovieAdapter.Cate
         TextView tvName;
         TextView tvRemarks;
         ImageView imgPhoto;
-        RecyclerView listView;
 
         public CategoryViewHolder(@NonNull View itemView) {
             super(itemView);
