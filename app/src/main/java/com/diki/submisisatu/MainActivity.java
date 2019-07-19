@@ -2,6 +2,7 @@ package com.diki.submisisatu;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity  {
     private TextView mTextMessage;
+    TextView tvHello;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -48,7 +50,6 @@ public class MainActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         BottomNavigationView navView = findViewById(R.id.nav_view);
         mTextMessage = findViewById(R.id.message);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -56,49 +57,59 @@ public class MainActivity extends AppCompatActivity  {
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         if (savedInstanceState == null) {
             navView.setSelectedItemId(R.id.navigation_movies);
-        }
-    }
 
 
-    //setting
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.options_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        switch (item.getItemId()){
-            case R.id.menu1:
-                MenuFragment menuFragment = new MenuFragment();
-                FragmentManager mFragmentManager = getSupportFragmentManager();
-                FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
-                mFragmentTransaction.replace(R.id.fragment_container, menuFragment);
-                mFragmentTransaction.addToBackStack(null);
-                mFragmentTransaction.commit();
-                Intent i = new Intent(this,MenuActivity.class);
-                startActivity(i);
-                return  true;
-                default:
-                    return true;
-        }
-    }
+//            int pokeCount = 3;
+//            String hello = String.format(getResources().getString(R.string.hello_world), "Diki", pokeCount, "Supriadi");
 //
+//            tvHello.setText(hello);
+        }
+    }
+
+
+    //setting with radio button
 //    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//        return super.onCreateOptionsMenu(menu);
+//    public boolean onCreateOptionsMenu(Menu menu){
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.options_menu, menu);
+//        return true;
 //    }
 //
 //    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        if (item.getItemId() == R.id.menu1){
-//            Intent mIntent = new Intent(Settings.ACTION_LOCALE_SETTINGS);
-//            startActivity(mIntent);
+//    public boolean onOptionsItemSelected(MenuItem item){
+//        switch (item.getItemId()){
+//            case R.id.menu1:
+//                MenuFragment menuFragment = new MenuFragment();
+//                FragmentManager mFragmentManager = getSupportFragmentManager();
+//                FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
+//                mFragmentTransaction.replace(R.id.fragment_container, menuFragment);
+//                mFragmentTransaction.addToBackStack(null);
+//                mFragmentTransaction.commit();
+//                Intent i = new Intent(this,MenuActivity.class);
+//                startActivity(i);
+//                return  true;
+//                default:
+//                    return true;
 //        }
-//        return super.onOptionsItemSelected(item);
 //    }
+
+
+
+    //change language
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_change_setting){
+            Intent mIntent = new Intent(Settings.ACTION_LOCALE_SETTINGS);
+            startActivity(mIntent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 }

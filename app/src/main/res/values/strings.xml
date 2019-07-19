@@ -2,32 +2,17 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Catalogue Movie</string>
     <string name="list">List</string>
-    <string name="gird">Gird</string>
-    <string name="with_cardview">With Cardview</string>
-    <string name="share">Share</string>
-    <string name="favorite">Favorite</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
     <string name="title_activity_bottom_navigation">BottomNavigation</string>
     <string name="movies">Movies</string>
     <string name="tvShow">Tv Show</string>
     <string name="this_activity"> Setting</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="fragmentMovies">Movies</string>
     <string name="fragmentTvShow">Tv Show</string>
-
-
-
-    <string name="hello_world">Hello World %1$s, you have %2$d pokes from %3$s</string>
-    <string name="good_morning">Good Morning</string>
-    <plurals name="numberOfSongsAvailable">
-        <item quantity="one">%d song found.</item>
-        <item quantity="other">%d songs found.</item>
-    </plurals>
-    <string name="app_homeurl">
-       Visit us at <xliff:g id="application_homepage">https://dicoding.com</xliff:g>
-    </string>
     <string name="change_language_settings">Change Language Settings</string>
+    <string name="genre_movie">Genre</string>
+    <string name="production">Production</string>
+    <string name="income">Income</string>
+    <string name="rating">Rating</string>
+    <string name="release">Release</string>
+    <string name="overview">Overview</string>
 </resources>

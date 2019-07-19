@@ -85,7 +85,7 @@ public class MovieList extends AppCompatActivity  implements View.OnClickListene
             setActionBarTitle("Catalogue Movie");
             list.addAll(MovieData.getListData());
             showRecyclerList();
-            mode = R.id.action_list;
+            mode = R.id.action_change_setting;
         }else
         {
             String stateTitle = savedInstanceState.getString(STATE_TITLE);
@@ -153,7 +153,7 @@ public class MovieList extends AppCompatActivity  implements View.OnClickListene
     public void setMode(int selectedMode){
         String title = null;
         switch (selectedMode) {
-            case R.id.action_list:
+            case R.id.action_change_setting:
                 title = "Mode List";
                 showRecyclerList();
                 break;
