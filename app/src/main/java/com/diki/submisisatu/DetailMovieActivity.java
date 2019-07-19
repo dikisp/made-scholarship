@@ -16,9 +16,9 @@ import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class DetailMovie extends AppCompatActivity {
-    TextView  title, genre, release, deskripsi, rating, income, produksi;
-    CircleImageView circleImageView;
+public class DetailMovieActivity extends AppCompatActivity {
+   private TextView  title, genre, release, deskripsi, rating, income, produksi;
+   private CircleImageView circleImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

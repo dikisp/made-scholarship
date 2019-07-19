@@ -6,7 +6,6 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -43,13 +42,13 @@ public class MovieList extends AppCompatActivity  implements View.OnClickListene
             Fragment fragment;
             switch (item.getItemId()) {
                 case R.id.navigation_movies:
-                    fragment = new fragmentMovies();
+                    fragment = new FragmentMovies();
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.container_layout,fragment, fragment. getClass().getSimpleName())
                             .commit();
                     return true;
                 case R.id.navigation_tvShow:
-                    fragment = new fragmentTvShow();
+                    fragment = new FragmentTvShow();
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.container_layout,fragment, fragment.getClass().getSimpleName())
                             .commit();
@@ -103,7 +102,7 @@ public class MovieList extends AppCompatActivity  implements View.OnClickListene
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.img_item_foto:
+            case R.id.lv_category:
                 Intent i = new Intent(MovieList.this, listMovieAdapter.class);
                 startActivity(i);
                 break;

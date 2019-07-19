@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -55,10 +54,28 @@ public class listMovieAdapter extends RecyclerView.Adapter<listMovieAdapter.Cate
                 .apply(new RequestOptions().override(55,55))
                 .into(categoryViewHolder.imgPhoto);
 
+        categoryViewHolder.tvName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, DetailMovieActivity.class);
+                intent.putExtra(Utils.parcel,listMovie.get(position));
+                context.startActivity(intent);
+            }
+        });
+
         categoryViewHolder.imgPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, DetailMovie.class);
+                Intent intent = new Intent(context, DetailMovieActivity.class);
+                intent.putExtra(Utils.parcel,listMovie.get(position));
+                context.startActivity(intent);
+            }
+        });
+
+        categoryViewHolder.tvRemarks.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, DetailMovieActivity.class);
                 intent.putExtra(Utils.parcel,listMovie.get(position));
                 context.startActivity(intent);
             }

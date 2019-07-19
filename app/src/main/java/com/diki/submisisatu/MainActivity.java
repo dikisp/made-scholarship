@@ -5,14 +5,10 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.annotation.NonNull;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity  {
@@ -27,13 +23,13 @@ public class MainActivity extends AppCompatActivity  {
             Fragment fragment;
             switch (item.getItemId()) {
                 case R.id.navigation_movies:
-                    fragment = new fragmentMovies();
+                    fragment = new FragmentMovies();
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.container_layout,fragment, fragment. getClass().getSimpleName())
                             .commit();
                     return true;
                 case R.id.navigation_tvShow:
-                    fragment = new fragmentTvShow();
+                    fragment = new FragmentTvShow();
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.container_layout,fragment, fragment.getClass().getSimpleName())
                             .commit();

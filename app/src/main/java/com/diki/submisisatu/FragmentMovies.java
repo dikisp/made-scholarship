@@ -16,11 +16,11 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class fragmentMovies extends Fragment {
+public class FragmentMovies extends Fragment {
     RecyclerView rvCategory;
     private ArrayList<Movie> list ;
 
-    public fragmentMovies() {
+    public FragmentMovies() {
         // Required empty public constructor
     }
 
@@ -46,16 +46,16 @@ public class fragmentMovies extends Fragment {
         listMovieAdapter listMovieAdapter = new listMovieAdapter(requireContext());
         listMovieAdapter.setListMovie(list);
         rvCategory.setAdapter(listMovieAdapter);
-
-        ItemClickSupport.addTo(rvCategory).setOnItemClickListener(new ItemClickSupport.OnItemClickListener(){
-            @Override
-            public void onItemClicked(RecyclerView recyclerView, int position, View v){
-                showSelectedPresident(list.get(position));
-            }
-        });
+//
+//        ItemClickSupport.addTo(rvCategory).setOnItemClickListener(new ItemClickSupport.OnItemClickListener(){
+//            @Override
+//            public void onItemClicked(RecyclerView recyclerView, int position, View v){
+//                showSelectedPresident(list.get(position));
+//            }
+//        });
     }
 
-    private void showSelectedPresident(Movie movie){
-        Toast.makeText(requireContext(), "Kamu memilih "+ movie.getTitle(), Toast.LENGTH_SHORT).show();
-    }
+//    private void showSelectedPresident(Movie movie){
+//        Toast.makeText(requireContext(), "Kamu memilih "+ movie.getTitle(), Toast.LENGTH_SHORT).show();
+//    }
 }
