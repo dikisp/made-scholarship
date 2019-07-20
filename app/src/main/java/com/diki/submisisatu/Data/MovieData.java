@@ -1,4 +1,6 @@
-package com.diki.submisisatu;
+package com.diki.submisisatu.Data;
+
+import com.diki.submisisatu.Model.Movie;
 
 import java.util.ArrayList;
 

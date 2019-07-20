@@ -1,4 +1,4 @@
-package com.diki.submisisatu;
+package com.diki.submisisatu.Model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

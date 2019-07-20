@@ -11,6 +11,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.diki.submisisatu.Fragment.FragmentMovies;
+import com.diki.submisisatu.Fragment.FragmentTvShow;
+
 public class MainActivity extends AppCompatActivity  {
     private TextView mTextMessage;
     TextView tvHello;

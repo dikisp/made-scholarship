@@ -1,4 +1,4 @@
-package com.diki.submisisatu;
+package com.diki.submisisatu.Item;
 
 import android.view.View;
 

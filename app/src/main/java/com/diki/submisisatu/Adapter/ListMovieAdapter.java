@@ -1,4 +1,4 @@
-package com.diki.submisisatu;
+package com.diki.submisisatu.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,13 +12,17 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.diki.submisisatu.DetailMovieActivity;
+import com.diki.submisisatu.Model.Movie;
+import com.diki.submisisatu.R;
+import com.diki.submisisatu.Model.Utils;
 
 import java.util.ArrayList;
 
-public class listMovieAdapter extends RecyclerView.Adapter<listMovieAdapter.CategoryViewHolder>
+public class ListMovieAdapter extends RecyclerView.Adapter<ListMovieAdapter.CategoryViewHolder>
 
 {
-    public listMovieAdapter(Context context) {
+    public ListMovieAdapter(Context context) {
         this.context = context;
     }
 

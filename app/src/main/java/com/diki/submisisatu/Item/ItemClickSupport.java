@@ -1,9 +1,10 @@
-package com.diki.submisisatu;
+package com.diki.submisisatu.Item;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.AdapterView;
+
+import com.diki.submisisatu.R;
 
 public class ItemClickSupport {
     private final RecyclerView mRecyclerView;

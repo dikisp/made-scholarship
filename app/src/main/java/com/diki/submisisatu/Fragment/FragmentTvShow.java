@@ -1,4 +1,4 @@
-package com.diki.submisisatu;
+package com.diki.submisisatu.Fragment;
 
 
 import android.os.Bundle;
@@ -8,7 +8,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+
+import com.diki.submisisatu.Adapter.ListMovieAdapter;
+import com.diki.submisisatu.Data.TvShowData;
+import com.diki.submisisatu.Model.Movie;
+import com.diki.submisisatu.Data.MovieData;
+import com.diki.submisisatu.R;
 
 import java.util.ArrayList;
 
@@ -16,11 +21,11 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FragmentMovies extends Fragment {
+public class FragmentTvShow extends Fragment {
     RecyclerView rvCategory;
     private ArrayList<Movie> list ;
 
-    public FragmentMovies() {
+    public FragmentTvShow() {
         // Required empty public constructor
     }
 
@@ -35,7 +40,7 @@ public class FragmentMovies extends Fragment {
         rvCategory.setHasFixedSize(true);
 
         list = new ArrayList<>();
-        list.addAll(MovieData.getListData());
+        list.addAll(TvShowData.getListData());
         showRecyclerList();
 
         return v;
@@ -43,10 +48,9 @@ public class FragmentMovies extends Fragment {
 
     private void showRecyclerList() {
         rvCategory.setLayoutManager(new LinearLayoutManager(requireContext()));
-        listMovieAdapter listMovieAdapter = new listMovieAdapter(requireContext());
+        ListMovieAdapter listMovieAdapter = new ListMovieAdapter(requireContext());
         listMovieAdapter.setListMovie(list);
         rvCategory.setAdapter(listMovieAdapter);
-//
 //        ItemClickSupport.addTo(rvCategory).setOnItemClickListener(new ItemClickSupport.OnItemClickListener(){
 //            @Override
 //            public void onItemClicked(RecyclerView recyclerView, int position, View v){

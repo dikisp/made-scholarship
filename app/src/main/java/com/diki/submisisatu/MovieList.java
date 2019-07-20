@@ -15,6 +15,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.diki.submisisatu.Adapter.ListMovieAdapter;
+import com.diki.submisisatu.Data.MovieData;
+import com.diki.submisisatu.Fragment.FragmentMovies;
+import com.diki.submisisatu.Fragment.FragmentTvShow;
+import com.diki.submisisatu.Item.ItemClickSupport;
+import com.diki.submisisatu.Model.Movie;
+
 import java.util.ArrayList;
 
 
@@ -79,21 +86,21 @@ public class MovieList extends AppCompatActivity  implements View.OnClickListene
         rvCategory.setHasFixedSize(true);
 
 
-        list = new ArrayList<>();
-        if (savedInstanceState == null){
-            setActionBarTitle("Catalogue Movie");
-            list.addAll(MovieData.getListData());
-            showRecyclerList();
-            mode = R.id.action_change_setting;
-        }else
-        {
-            String stateTitle = savedInstanceState.getString(STATE_TITLE);
-            ArrayList<Movie> stateList = savedInstanceState.getParcelableArrayList(STATE_LIST);
-            int stateMode = savedInstanceState.getInt(STATE_MODE);
-            setActionBarTitle(stateTitle);
-            list.addAll(stateList);
-            setMode(stateMode);
-        }
+//        list = new ArrayList<>();
+//        if (savedInstanceState == null){
+//            setActionBarTitle("Catalogue Movie");
+//            list.addAll(MovieData.getListData());
+//            showRecyclerList();
+//            mode = R.id.action_change_setting;
+//        }else
+//        {
+//            String stateTitle = savedInstanceState.getString(STATE_TITLE);
+//            ArrayList<Movie> stateList = savedInstanceState.getParcelableArrayList(STATE_LIST);
+//            int stateMode = savedInstanceState.getInt(STATE_MODE);
+//            setActionBarTitle(stateTitle);
+//            list.addAll(stateList);
+//            setMode(stateMode);
+//        }
 
 
     }
@@ -103,7 +110,7 @@ public class MovieList extends AppCompatActivity  implements View.OnClickListene
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.lv_category:
-                Intent i = new Intent(MovieList.this, listMovieAdapter.class);
+                Intent i = new Intent(MovieList.this, ListMovieAdapter.class);
                 startActivity(i);
                 break;
         }
@@ -116,7 +123,7 @@ public class MovieList extends AppCompatActivity  implements View.OnClickListene
 
     private void showRecyclerList() {
         rvCategory.setLayoutManager(new LinearLayoutManager(this));
-        listMovieAdapter listMovieAdapter = new listMovieAdapter(this);
+        ListMovieAdapter listMovieAdapter = new ListMovieAdapter(this);
         listMovieAdapter.setListMovie(list);
         rvCategory.setAdapter(listMovieAdapter);
 

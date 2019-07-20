@@ -1,16 +1,14 @@
 package com.diki.submisisatu;
 
 import android.content.Intent;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.diki.submisisatu.Model.Movie;
+import com.diki.submisisatu.Model.Utils;
 
 import java.util.Objects;
 
