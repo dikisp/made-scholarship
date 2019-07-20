@@ -15,4 +15,6 @@
     <string name="rating">Rating Film</string>
     <string name="release">Rilis</string>
     <string name="overview">Ikhstiar</string>
+    <string name="detail_poster">Detail Poster</string>
+    <string name="titleMovie">Judul</string>
 </resources>

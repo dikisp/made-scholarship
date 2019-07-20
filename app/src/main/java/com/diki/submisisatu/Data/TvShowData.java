@@ -30,7 +30,7 @@ public class TvShowData {
             {
                 "unikom 2002",
                     "Factory",
-                    "http://incitest.unikom.ac.id/wp-content/uploads/2019/05/Edit-2.png",
+                    "http://incitest.unikom.ac.id/wp-content/uploads/2018/11/WhatsApp-Image-2018-11-06-at-10.24.16.jpeg",
                     "Alfie (Anthony Hopkins) and Helena (Gemma Jones) divorce. Helena begins seeing a fortune teller, Cristal (Pauline Collins), for spiritual advice. Their daughter Sally (Naomi Watts) has a troubled marriage with author Roy (Josh Brolin), who once wrote a successful book and is now anxiously waiting for response from his publisher about the manuscript of his newest one. Helena helps pay their rent.\n",
                     "Independent\n",
                     "2010\n",
