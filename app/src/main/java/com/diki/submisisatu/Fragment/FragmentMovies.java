@@ -36,13 +36,13 @@ import io.reactivex.schedulers.Schedulers;
 public class FragmentMovies extends Fragment {
     RecyclerView rvCategory;
     private ListMovieAdapter listMovieAdapter;
-    private ArrayList<Movie> list ;
+    private ArrayList<Movie> list  ;
     private static final String API_KEY = BuildConfig.APIKEY;
     private final List<Movie>  movieList = new ArrayList<>();
     private ProgressBar loading;
     private static final String STATE_RESULT = "state_result";
-    static final String SOME_VALUE = "int_value";
-    private int position;
+    private ProgressBar progressBar;
+
 
     public FragmentMovies() {
         // Required empty public constructor
@@ -53,17 +53,25 @@ public class FragmentMovies extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         RecyclerView rvMainMovie = view.findViewById(R.id.lv_movies);
+        progressBar = view.findViewById(R.id.Loading);
+        progressBar.setVisibility(View.VISIBLE);
+        list =  new ArrayList<>();
+
 
         if(savedInstanceState != null){
             list = savedInstanceState.getParcelableArrayList(STATE_RESULT);
             movieList.addAll(Objects.requireNonNull(list));
+            progressBar.setVisibility(View.GONE);
+        }
+        else {
+            fetchDataMovie();
         }
 
         listMovieAdapter = new ListMovieAdapter(getContext(),movieList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         rvMainMovie.setLayoutManager(layoutManager);
         rvMainMovie.setAdapter(listMovieAdapter);
-        setView(false);
+//        setView(false);
 
     }
 
@@ -71,25 +79,25 @@ public class FragmentMovies extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_fragment_movies, container, false);
-//        return inflater.inflate(R.layout.fragment_fragment_movies, container, false);
+//        View v = inflater.inflate(R.layout.fragment_fragment_movies, container, false);
+        return inflater.inflate(R.layout.fragment_fragment_movies, container, false);
 
-        rvCategory = v.findViewById(R.id.lv_movies);
-
-        list = new ArrayList<>();
-
-        if(savedInstanceState != null){
-            list = savedInstanceState.getParcelableArrayList(STATE_RESULT);
-            movieList.addAll(Objects.requireNonNull(list));
-        }
-
-        fetchDataMovie();
-        listMovieAdapter = new ListMovieAdapter(getContext(),movieList);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-        rvCategory.setLayoutManager(layoutManager);
-        rvCategory.setAdapter(listMovieAdapter);
-        loading = v.findViewById(R.id.Loading);
-        return v;
+//        rvCategory = v.findViewById(R.id.lv_movies);
+//
+//        list = new ArrayList<>();
+//
+//        if(savedInstanceState != null){
+//            list = savedInstanceState.getParcelableArrayList(STATE_RESULT);
+//            movieList.addAll(Objects.requireNonNull(list));
+//        }
+//
+//        fetchDataMovie();
+//        listMovieAdapter = new ListMovieAdapter(getContext(),movieList);
+//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+//        rvCategory.setLayoutManager(layoutManager);
+//        rvCategory.setAdapter(listMovieAdapter);
+//        loading = v.findViewById(R.id.Loading);
+//        return v;
     }
 
 
@@ -116,25 +124,28 @@ public class FragmentMovies extends Fragment {
     }
 
 
-    private void setView(Boolean status){
-        if(status){
-            loading.setVisibility(View.GONE);
-            rvCategory.setVisibility(View.VISIBLE);
-
-        }
-        else{
-            loading.setVisibility(View.VISIBLE);
-            rvCategory.setVisibility(View.VISIBLE);
-        }
-    }
+//    private void setView(Boolean status){
+//        if(status){
+//            loading.setVisibility(View.GONE);
+//            rvCategory.setVisibility(View.VISIBLE);
+//
+//        }
+//        else{
+//            loading.setVisibility(View.VISIBLE);
+//            rvCategory.setVisibility(View.VISIBLE);
+//        }
+//    }
 
     private void initData(List<Movie> Movie){
         movieList.clear();
         movieList.addAll(Movie);
         listMovieAdapter.notifyDataSetChanged();
-        if(movieList.size()> 0){
-            setView(true);
-        }
+//
+//        if(movieList.size()> 0){
+//            setView(true);
+//        }
+        list.addAll(movieList);
+        progressBar.setVisibility(View.GONE);
     }
 
 

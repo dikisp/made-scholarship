@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.diki.submisisatu.Model.Movie;
+import com.diki.submisisatu.Model.TV;
 
 import java.util.Objects;
 
@@ -37,7 +38,7 @@ public class DetailTVActivity extends AppCompatActivity {
         voteCount = findViewById(R.id.TVvoteCount);
 
         Intent intent = getIntent();
-        Movie data = intent.getParcelableExtra(EXTRA_TV);
+        TV data = intent.getParcelableExtra(EXTRA_TV);
 //        Log.d("cek",data.getOriginalTitle());
         Log.d("cek",data.toString());
 

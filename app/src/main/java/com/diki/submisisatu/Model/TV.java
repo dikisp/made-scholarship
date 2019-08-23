@@ -48,15 +48,15 @@ public class TV implements Parcelable {
         rating = in.readInt();
     }
 
-    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
+    public static final Creator<TV> CREATOR = new Creator<TV>() {
         @Override
-        public Movie createFromParcel(Parcel in) {
-            return new Movie(in);
+        public TV createFromParcel(Parcel in) {
+            return new TV(in);
         }
 
         @Override
-        public Movie[] newArray(int size) {
-            return new Movie[size];
+        public TV[] newArray(int size) {
+            return new TV[size];
         }
     };
 
