@@ -9,12 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.diki.submisisatu.Model.Movie;
 import com.diki.submisisatu.Model.TV;
 
 import java.util.Objects;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class DetailTVActivity extends AppCompatActivity {
     private TextView  title, tvRelease, deskripsi, rating, voteCount;
