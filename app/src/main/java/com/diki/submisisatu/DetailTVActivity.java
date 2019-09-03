@@ -15,15 +15,17 @@ import java.util.Objects;
 
 
 public class DetailTVActivity extends AppCompatActivity {
-    private TextView  title, tvRelease, deskripsi, rating, voteCount;
-    private static final String posterPath = BuildConfig.POSTER_PATH;
-    private ImageView circleImageView;
     public static final  String EXTRA_TV = "EXTRA_TV";
-    public static final  String TAG = "cek";
+
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        TextView  title, tvRelease, deskripsi, rating, voteCount;
+        final String posterPath = BuildConfig.POSTER_PATH;
+        ImageView circleImageView;
+        final  String TAG = "cek";
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_tv);
 

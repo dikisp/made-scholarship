@@ -13,6 +13,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.diki.submisisatu.Adapter.ViewPagerAdapter;
+import com.diki.submisisatu.Fragment.FragmentFavorite;
 import com.diki.submisisatu.Fragment.FragmentMovies;
 import com.diki.submisisatu.Fragment.FragmentTvShow;
 
@@ -43,6 +45,14 @@ public class MainActivity extends AppCompatActivity  {
                             .replace(R.id.container_layout,fragment, fragment.getClass().getSimpleName())
                             .commit();
                     return true;
+
+                case R.id.navigation_favorite:
+                    fragment = new FragmentFavorite();
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.container_layout,fragment, fragment.getClass().getSimpleName())
+                            .commit();
+                    return true;
+
             }
             return false;
         }
@@ -62,8 +72,29 @@ public class MainActivity extends AppCompatActivity  {
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         if (savedInstanceState == null) {
             navView.setSelectedItemId(R.id.navigation_movies);
-
         }
+
+//        final BottomNavigationView navigationView = (BottomNavigationView) findViewById(R.id.nav_view);
+//        navigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+//        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//            @Override
+//            public void onPageScrolled(int i, float v, int i1) {
+//
+//            }
+//
+//            @Override
+//            public void onPageSelected(int i) {
+//                switch (i){
+//                    case 0:
+//                        navigationView.getSelectedItemId(R.id.nav_view);
+//                }
+//            }
+//
+//            @Override
+//            public void onPageScrollStateChanged(int i) {
+//
+//            }
+//        });
 
 //        if (savedInstanceState != null){
 //            String result = savedInstanceState.getString(STATE_RESULT);
@@ -71,20 +102,20 @@ public class MainActivity extends AppCompatActivity  {
 //        }
 
 
-        //view pager
-//        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
+//        view pager
+//        ViewPager viewPager = (ViewPager) findViewById(R.id.main_pager);
 //        ViewPagerAdapter viewPagerAdapter =new ViewPagerAdapter(getSupportFragmentManager(), this);
 //        viewPager.setAdapter(viewPagerAdapter);
 //
 //        BottomNavigationView bottomNavigationView =findViewById(R.id.nav_view);
-//        bottomNavigationView.setSelectedItemId();
+//        bottomNavigationView.setSelectedItemId(viewPager);
     }
 
 
 
-//    private void setupViewPager(ViewPager viewPager){
-//        ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), context);
-//        pagerAdapter.add(new FragmentMovies());
+//    private void setupViewPager(ViewPager viewPager,){
+//        ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), this);
+//        pagerAdapter.addFragment()
 //        pagerAdapter.addFragment(new FragmentTvShow());
 //        viewPager.setAdapter(pagerAdapter);
 //    }

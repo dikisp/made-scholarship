@@ -20,10 +20,14 @@ public class MenuActivity extends AppCompatActivity {
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case android.R.id.home:
-                onBackPressed();
-                return true;
+//        switch (item.getItemId()){
+//            case android.R.id.home:
+//                onBackPressed();
+//                return true;
+//        }
+
+        if(item.getItemId() == R.id.home){
+            onBackPressed();
         }
         return super.onOptionsItemSelected(item);
     }

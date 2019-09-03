@@ -14,22 +14,42 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
-    private final List<Fragment> mFragmentList = new ArrayList<>();
 
-    public ViewPagerAdapter(FragmentManager manager) {
-        super(manager);
+    private final Context context;
+
+    public ViewPagerAdapter(FragmentManager fm, Context context) {
+        super(fm);
+        this.context = context;
     }
+
     @Override
-    public Fragment getItem(int position) {
-        return mFragmentList.get(position);
+    public Fragment getItem(int i) {
+        switch (i) {
+            case 0:
+                return new FragmentMovies();
+            case 1:
+                return new FragmentTvShow();
+        }
+
+        return null;
     }
 
+    @SuppressWarnings("SameReturnValue")
     @Override
     public int getCount() {
-        return mFragmentList.size();
+        return 2;
     }
 
-    public void addFragment(Fragment fragment) {
-        mFragmentList.add(fragment);
+    @Nullable
+    @Override
+    public CharSequence getPageTitle(int position) {
+        switch (position) {
+            case 0:
+                return context.getResources().getString(R.string.movies);
+            case 1:
+                return context.getResources().getString(R.string.tvShow);
+            default:
+                return null;
+        }
     }
 }

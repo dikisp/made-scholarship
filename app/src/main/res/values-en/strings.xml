@@ -19,4 +19,5 @@
     <string name="titleMovie">Title</string>
     <string name="RealeaseDate">Release Date</string>
     <string name="voteCount">Vote Count</string>
+    <string name="favorite" > Favorite </string>
 </resources>
