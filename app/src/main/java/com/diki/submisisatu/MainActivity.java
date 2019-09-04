@@ -13,7 +13,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.diki.submisisatu.Adapter.ViewPagerAdapter;
 import com.diki.submisisatu.Fragment.FragmentFavorite;
 import com.diki.submisisatu.Fragment.FragmentMovies;
 import com.diki.submisisatu.Fragment.FragmentTvShow;

@@ -20,4 +20,6 @@
     <string name="RealeaseDate">Tanggal Rilis</string>
     <string name="voteCount">Total Vote</string>
     <string name="favorite"> Juara </string>
+    <string name="delete" > Hapus </string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
