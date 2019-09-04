@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context="com.diki.myprofile.contact.ContactFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <ProgressBar
+            android:id="@+id/pb_contact"
+            android:layout_width="30dp"
+            android:layout_height="29dp"
+            android:layout_gravity="center" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:text="Contact"
+            android:textAllCaps="true"
+            android:textSize="32sp" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/telp"
+                android:layout_width="183dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="16dp"
+                android:background="@drawable/animation_list"
+                android:drawableLeft="@drawable/ic_phone_receiver"
+                android:text="Call" />
+
+            <Button
+                android:id="@+id/email"
+                android:layout_width="183dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="16dp"
+                android:background="@drawable/animation_list"
+                android:drawableLeft="@drawable/ic_email_black_24dp"
+                android:text="Email" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/activity_vertical_margin"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/inst"
+                android:layout_width="183dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/animation_list"
+                android:drawableLeft="@drawable/ic_instagram_logo"
+                android:text="Instagram" />
+
+            <Button
+                android:id="@+id/twitt"
+                android:layout_width="183dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="16dp"
+                android:background="@drawable/animation_list"
+                android:drawableLeft="@drawable/ic_twitter_logo_silhouette"
+                android:text="Twitter" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="16dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/fb"
+                android:layout_width="183dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/animation_list"
+                android:drawableLeft="@drawable/ic_facebook"
+                android:text="Facebook" />
+
+            <Button
+                android:id="@+id/git"
+                android:layout_width="183dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="16dp"
+                android:background="@drawable/animation_list"
+                android:drawableLeft="@drawable/ic_github_big_logo"
+                android:text="Github" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/activity_vertical_margin"
+            android:text="Address"
+            android:textColor="@color/textPrimary" />
+
+        <ImageView
+            android:id="@+id/maps"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/location"
+            android:layout_marginStart="@dimen/activity_vertical_margin"
+            android:layout_marginEnd="16dp" />
+
+    </LinearLayout>
+</ScrollView>

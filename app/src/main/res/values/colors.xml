@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--<color name="colorPrimary">#040afb</color>-->
+    <color name="colorPrimary">#2196f3</color>
+    <color name="primaryLink">#a9cdf0</color>
+    <color name="textPrimary">#212121</color>
+    <color name="secondaryLink">#ab5685</color>
+    <color name="backGround">#f3f6f9</color>
+    <color name="white">#fff</color>
+    <color name="colorPrimaryDark">#fff</color>
+    <color name="colorAccent">#fff</color>
+    <color name="orange">#fff</color>
+    <color name="orange2">#fff</color>
+
+
+    <color name="colorPrimary1">#3F51B5</color>
+    <color name="colorPrimaryDark1">#303F9F</color>
+    <color name="colorAccent1">#FF4081</color>
+
+    <!--color untuk gradient tansition-->
+    <color name="purple_500">#9c27b0</color>
+    <color name="deep_purple_500">#673ab7</color>
+    <color name="indigo_500">#3f51b5</color>
+    <color name="blue_500">#2196f3</color>
+    <color name="cyan_500">#00bcd4</color>
+    <color name="light_blue_500">#03a9f4</color>
+</resources>

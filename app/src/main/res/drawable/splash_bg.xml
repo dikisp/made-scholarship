@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+    <item android:drawable="@color/colorPrimary"/>
+
+    <item android:gravity="center"
+        android:width="100dp"
+        android:height="100dp">
+        <bitmap android:gravity="fill_horizontal|fill_vertical"
+            android:src="@drawable/man"
+            />
+    </item>
+    <item android:gravity="center"
+        android:top="55dp"
+        android:width="20dp"
+        android:height="10dp">
+        <bitmap android:gravity="fill_horizontal|fill_vertical"
+            android:src="@drawable/text"
+            />
+    </item>
+
+</layer-list>

@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/activity_vertical_margin"
+    tools:context="com.diki.myprofile.profile.ProfileFragment">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:ignore="MissingConstraints">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/wp4103005"
+        tools:ignore="MissingConstraints">
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/circleImageView"
+            android:layout_width="210dp"
+            android:layout_height="154dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvprofile_nama"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/nama"
+            android:textColor="@color/orange"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/circleImageView" />
+
+        <TextView
+            android:id="@+id/tvprofile_nim"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/nim"
+            android:textColor="@color/orange"
+            app:layout_constraintTop_toBottomOf="@+id/tvprofile_nama"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="231dp" />
+
+        <TextView
+            android:id="@+id/tvprofile_kelas"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvprofile_nim"
+            android:layout_gravity="center"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/kelas"
+            android:textColor="@color/orange"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="250dp" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Call"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <!--<androidx.constraintlayout.widget.ConstraintLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/constraintLayout1"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/button"-->
+        <!--tools:ignore="MissingConstraints">-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/tvLabelLive"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Lives In"-->
+            <!--tools:layout_editor_absoluteX="0dp"-->
+            <!--tools:layout_editor_absoluteY="364dp"-->
+             <!--/>-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/textView2"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:text="Bandung, Indonesia"-->
+            <!--android:textStyle="bold"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/tvLabelLive"-->
+            <!--tools:layout_editor_absoluteX="0dp" />-->
+
+        <!--<View-->
+            <!--android:id="@+id/view1"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="2dp"-->
+            <!--android:layout_below="@+id/textView2"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:background="@color/textPrimary"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/textView2"-->
+            <!--tools:layout_editor_absoluteX="0dp" />-->
+
+
+        <!--<TextView-->
+            <!--android:id="@+id/tvLabelBirth"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Birth"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/view1"-->
+            <!--tools:layout_editor_absoluteX="-16dp" />-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/tvBirth"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="124dp"-->
+            <!--android:text="October 1998"-->
+            <!--android:textStyle="bold"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/tvLabelBirth"-->
+            <!--tools:layout_editor_absoluteX="71dp" />-->
+
+        <!--<View-->
+            <!--android:id="@+id/view2"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="2dp"-->
+            <!--android:layout_below="@+id/tvBirth"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:background="@color/textPrimary"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/tvBirth"-->
+            <!--tools:layout_editor_absoluteX="0dp" />-->
+
+
+        <!--<TextView-->
+            <!--android:id="@+id/tvLabelEducation"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Education"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/view2"-->
+            <!--tools:layout_editor_absoluteX="0dp" />-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/tvEducation"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="1092dp"-->
+            <!--android:text="Indonesia Computer University"-->
+            <!--android:textStyle="bold"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/tvLabelEducation"-->
+            <!--tools:layout_editor_absoluteX="16dp" />-->
+
+        <!--<View-->
+            <!--android:id="@+id/view3"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="2dp"-->
+            <!--android:layout_below="@+id/textView1"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:background="@color/textPrimary"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/tvEducation"-->
+            <!--tools:layout_editor_absoluteX="0dp" />-->
+
+
+
+        <!--<TextView-->
+            <!--android:id="@+id/tvLabelGender"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="20dp"-->
+            <!--android:text="Gender"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/view3"-->
+            <!--tools:layout_editor_absoluteX="0dp" />-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/tvGender"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Male"-->
+            <!--android:textStyle="bold"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/tvLabelGender"-->
+            <!--tools:layout_editor_absoluteX="0dp" />-->
+
+        <!--<View-->
+            <!--android:id="@+id/view4"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="2dp"-->
+            <!--android:layout_below="@+id/textView1"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:background="@color/textPrimary"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/tvGender"-->
+            <!--tools:layout_editor_absoluteX="0dp" />-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/tvLabelSKill"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="20dp"-->
+            <!--android:text="Skill"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/view5"-->
+            <!--tools:layout_editor_absoluteX="0dp" />-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/tvSkill"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="3D Modelling"-->
+            <!--android:textStyle="bold"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/tvLabelSKill"-->
+            <!--tools:layout_editor_absoluteX="0dp" />-->
+
+        <!--<View-->
+            <!--android:id="@+id/view5"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="2dp"-->
+            <!--android:layout_below="@+id/textView1"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:background="@color/textPrimary"-->
+            <!--app:layout_constraintTop_toBottomOf="@+id/tvGender"-->
+            <!--tools:layout_editor_absoluteX="0dp" />-->
+
+        <TextView
+            android:id="@+id/tvLabelDeskripsi"
+            android:layout_width="match_parent"
+            android:layout_margin="@dimen/activity_vertical_margin"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Description"
+            app:layout_constraintTop_toBottomOf="@+id/button"
+            tools:layout_editor_absoluteX="0dp" />
+
+        <TextView
+            android:id="@+id/tvprofile_deskripsi"
+            android:layout_margin="@dimen/activity_vertical_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="I am a student majoring in informatics engineering, I like to eat a lot and eat halal foods, especially eating friends"
+            android:textAlignment="center"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/tvLabelDeskripsi"
+            tools:layout_editor_absoluteX="38dp" />
+
+        <View
+            android:id="@+id/view6"
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:layout_below="@+id/textView1"
+            android:layout_margin="@dimen/activity_vertical_margin"
+            android:layout_alignParentRight="true"
+            android:background="@color/textPrimary"
+            app:layout_constraintTop_toBottomOf="@+id/tvprofile_deskripsi"
+            tools:layout_editor_absoluteX="0dp"
+            tools:ignore="UnknownId" />
+
+        <ProgressBar
+            android:id="@+id/pb_profile"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.486"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+    <!--</androidx.constraintlayout.widget.ConstraintLayout>-->
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
