@@ -2,16 +2,20 @@ package com.diki.submisisatu.Model;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
 import java.io.Serializable;
 
 @Entity(tableName = "tMovie")
-public class DataFavoriteMovie implements Serializable {
+public class DataFavoriteMovie  {
+    public DataFavoriteMovie(){
+
+    }
     @PrimaryKey
     @NonNull
-    public String id;
+    public int id;
 
     @ColumnInfo(name = "name")
     public String name;
@@ -19,32 +23,14 @@ public class DataFavoriteMovie implements Serializable {
     @ColumnInfo(name = "vote_average")
     public String vote_average;
 
-    public String getOriginalTitle() {
-        return OriginalTitle;
-    }
-
-    public void setOriginalTitle(String originalTitle) {
-        OriginalTitle = originalTitle;
-    }
-
-    public String getPosterPath() {
-        return PosterPath;
-    }
-
-    public void setPosterPath(String posterPath) {
-        PosterPath = posterPath;
-    }
-
     @ColumnInfo(name = "OriginalTitle")
     public String OriginalTitle;
-
-
 
     @ColumnInfo(name = "PosterPath")
     public String PosterPath;
 
     @ColumnInfo(name = "rating")
-    public String rating;
+    public Double rating;
 
     @ColumnInfo(name = "overview")
     public String overview;
@@ -52,12 +38,14 @@ public class DataFavoriteMovie implements Serializable {
     @ColumnInfo(name = "release_date")
     public String release_date;
 
-    @NonNull
-    public String getId() {
+    @ColumnInfo(name = "movieid")
+    public int movieid;
+
+    public int getId() {
         return id;
     }
 
-    public void setId(@NonNull String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -77,11 +65,27 @@ public class DataFavoriteMovie implements Serializable {
         this.vote_average = vote_average;
     }
 
-    public String getRating() {
+    public String getOriginalTitle() {
+        return OriginalTitle;
+    }
+
+    public void setOriginalTitle(String originalTitle) {
+        OriginalTitle = originalTitle;
+    }
+
+    public String getPosterPath() {
+        return PosterPath;
+    }
+
+    public void setPosterPath(String posterPath) {
+        PosterPath = posterPath;
+    }
+
+    public Double getRating() {
         return rating;
     }
 
-    public void setRating(String rating) {
+    public void setRating(Double rating) {
         this.rating = rating;
     }
 
@@ -101,6 +105,31 @@ public class DataFavoriteMovie implements Serializable {
         this.release_date = release_date;
     }
 
+    public int getMovieid() {
+        return movieid;
+    }
+
+    public void setMovieid(int movieid) {
+        this.movieid = movieid;
+    }
 
 
+    @Ignore
+    public  DataFavoriteMovie(int movieid, String originalTitle, Double rating, String posterPath, String overview){
+        this.movieid = movieid;
+        this.rating = rating;
+        this.OriginalTitle = originalTitle;
+        this.PosterPath = originalTitle;
+        this.PosterPath = posterPath;
+        this.overview = overview;
+    }
+    public  DataFavoriteMovie(int id, String originalTitle, String posterPath, String overview){
+        this.id = id;
+        this.movieid = movieid;
+        this.rating = rating;
+        this.OriginalTitle = originalTitle;
+        this.PosterPath = originalTitle;
+        this.PosterPath = posterPath;
+        this.overview = overview;
+    }
 }

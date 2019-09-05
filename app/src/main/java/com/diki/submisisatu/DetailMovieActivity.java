@@ -17,24 +17,32 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.diki.submisisatu.Database.AppDatabase;
+import com.diki.submisisatu.Item.Support;
 import com.diki.submisisatu.Model.DataFavoriteMovie;
 import com.diki.submisisatu.Model.Movie;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 
-public class DetailMovieActivity extends AppCompatActivity implements View.OnClickListener{
+public class DetailMovieActivity extends AppCompatActivity {
    private TextView  title, tvRelease, deskripsi, rating, voteCount;
    private static final String posterPath = BuildConfig.POSTER_PATH;
    private ImageView circleImageView;
    private Button buttonDelete, buttonFavorite;
+   private AppDatabase Db;
    public static final  String EXTRA_MOVIE = "extra_movie";
    public static final  String TAG = "cek";
    private ProgressBar loading;
    private String mPosition;
    boolean adaData = false;
+   List<DataFavoriteMovie> enter = new ArrayList<>();
    private AppDatabase db;
 
+   Movie movie;
+   String poster, name, overview , realeseDate;
+   int movie_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +62,6 @@ public class DetailMovieActivity extends AppCompatActivity implements View.OnCli
         //
 
 
-        //btn fav
-        buttonFavorite.setOnClickListener(this);
-        buttonDelete.setOnClickListener(this);
         db = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "db").allowMainThreadQueries().build();
 
@@ -79,18 +84,6 @@ public class DetailMovieActivity extends AppCompatActivity implements View.OnCli
             Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         }
 
-
-        //add to fav
-        final DataFavoriteMovie dataFavoriteMovie = (DataFavoriteMovie) getIntent().getSerializableExtra("data");
-         if (dataFavoriteMovie != null){
-             Glide.with(this).load(posterPath + data.getPosterPath())
-                     .into(circleImageView);
-             title.setText(data.getOriginalTitle());
-             rating.setText(String.valueOf(data.getVoteAverage()));
-             deskripsi.setText(data.getOverview());
-             tvRelease.setText(data.getReleaseDate());
-             voteCount.setText(String.valueOf(data.getVoteCount()));
-        }
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -132,62 +125,37 @@ public class DetailMovieActivity extends AppCompatActivity implements View.OnCli
 
 
     //add to favorite
+    public void saveFavorite(){
+        Double rate = movie.getVoteAverage();
+        final DataFavoriteMovie dataFavoriteMovie = new DataFavoriteMovie(movie_id, name, poster, overview);
+        Support.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+
+                    db.dao().insertFavorite(dataFavoriteMovie);
 
 
-
-
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case (R.id.btn_delete) :
-//                saveFavoriteMovie;
-                break;
-            case (R.id.btn_fav) :
-                DataFavoriteMovie a =new DataFavoriteMovie();
-                 a = new DataFavoriteMovie();
-                a.setOriginalTitle(title.getText().toString());
-                a.setOverview(deskripsi.getText().toString());
-                if (adaData == true) {
-                    updateData(a);
-                } else {
-                    insertData(a);
-                }
-
-        }
+            }
+        });
     }
 
-    private void updateData(final DataFavoriteMovie friend){
-        new AsyncTask<Void, Void, Long>(){
+    private void deleteFavorite(final int movie_id){
+        Support.getInstance().diskIO().execute(new Runnable() {
             @Override
-            protected Long doInBackground(Void... voids) {
-                long status = (long) db.dao().updateFriend(friend);
-                return status;
+            public void run() {
+                db.dao().deleteFavoriteWithId(movie_id);
             }
-
-            @Override
-            protected void onPostExecute(Long status) {
-                Toast.makeText(DetailMovieActivity.this, "status row "+status, Toast.LENGTH_SHORT).show();
-            }
-        }.execute();
+        });
     }
 
 
-    private void insertData(final DataFavoriteMovie friend){
 
-        new AsyncTask<Void, Void, Long>(){
-            @Override
-            protected Long doInBackground(Void... voids) {
-                long status = (long) db.dao().insertFriend(friend);
-                return status;
-            }
 
-            @Override
-            protected void onPostExecute(Long status) {
-                Toast.makeText(DetailMovieActivity.this, "Add Friend Success "+status, Toast.LENGTH_SHORT).show();
-            }
-        }.execute();
-    }
+
+
+
+
+
 
     public static Intent getActIntent(Activity activity) {
         return new Intent(activity, DataFavoriteMovie.class);

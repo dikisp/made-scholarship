@@ -20,6 +20,55 @@ public class Movie implements Parcelable {
     private String name;
     @SerializedName("popularity")
     private double popularity;
+
+    public Movie() {
+
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setVoteAverage(double voteAverage) {
+        this.voteAverage = voteAverage;
+    }
+
+    public void setVoteCount(double voteCount) {
+        this.voteCount = voteCount;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPopularity(double popularity) {
+        this.popularity = popularity;
+    }
+
+    public void setBackdropPath(String backdropPath) {
+        this.backdropPath = backdropPath;
+    }
+
+    public void setOverview(String overview) {
+        this.overview = overview;
+    }
+
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
+    public void setPosterPath(String posterPath) {
+        this.posterPath = posterPath;
+    }
+
+    public void setRuntime(int runtime) {
+        this.runtime = runtime;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
     @SerializedName("backdrop_path")
     private  String backdropPath;
     @SerializedName("overview")
@@ -33,7 +82,7 @@ public class Movie implements Parcelable {
     @SerializedName("rating")
     private int rating;
 
-    protected Movie(Parcel in) {
+    public Movie(Parcel in) {
         id = in.readInt();
         voteAverage = in.readDouble();
         voteCount = in.readDouble();
