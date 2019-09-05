@@ -1,10 +1,12 @@
 package com.diki.submisisatu;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
@@ -20,6 +22,7 @@ import com.diki.submisisatu.Database.AppDatabase;
 import com.diki.submisisatu.Item.Support;
 import com.diki.submisisatu.Model.DataFavoriteMovie;
 import com.diki.submisisatu.Model.Movie;
+import com.github.ivbaranov.mfb.MaterialFavoriteButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -148,7 +151,59 @@ public class DetailMovieActivity extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("StaticFieldLeak")
+    private void checkStatus(final String movieName){
+        final MaterialFavoriteButton materialFavoriteButton = (MaterialFavoriteButton) findViewById(R.id.favorite_button);
+        new AsyncTask<Void, Void, Void>(){
+            @Override
+            protected Void doInBackground(Void... params){
+                enter.clear();
+                enter = db.dao().loadAll(movieName);
+                return null;
+            }
+            @Override
+            protected void onPostExecute(Void aVoid){
+                super.onPostExecute(aVoid);
+                if (enter.size() > 0){
+                    materialFavoriteButton.setFavorite(true);
+                    materialFavoriteButton.setOnFavoriteChangeListener(
+                            new MaterialFavoriteButton.OnFavoriteChangeListener() {
+                                @Override
+                                public void onFavoriteChanged(MaterialFavoriteButton buttonView, boolean favorite) {
+                                    if (favorite == true) {
+                                        saveFavorite();
+                                        Snackbar.make(buttonView, "Added to Favorite",
+                                                Snackbar.LENGTH_SHORT).show();
+                                    } else {
+                                        deleteFavorite(movie_id);
+                                        Snackbar.make(buttonView, "Removed from Favorite",
+                                                Snackbar.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
 
+
+                }else {
+                    materialFavoriteButton.setOnFavoriteChangeListener(
+                            new MaterialFavoriteButton.OnFavoriteChangeListener() {
+                                @Override
+                                public void onFavoriteChanged(MaterialFavoriteButton buttonView, boolean favorite) {
+                                    if (favorite == true) {
+                                        saveFavorite();
+                                        Snackbar.make(buttonView, "Added to Favorite",
+                                                Snackbar.LENGTH_SHORT).show();
+                                    } else {
+                                        int movie_id = getIntent().getExtras().getInt("id");
+                                        deleteFavorite(movie_id);
+                                        Snackbar.make(buttonView, "Removed from Favorite",
+                                                Snackbar.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                }
+            }
+        }.execute();
+    }
 
 
 
