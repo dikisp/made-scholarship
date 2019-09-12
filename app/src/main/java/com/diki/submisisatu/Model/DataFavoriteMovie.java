@@ -13,7 +13,7 @@ public class DataFavoriteMovie  {
     public DataFavoriteMovie(){
 
     }
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @NonNull
     public int id;
 

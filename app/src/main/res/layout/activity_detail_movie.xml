@@ -9,19 +9,6 @@
     android:orientation="vertical"
     tools:context=".DetailMovieActivity">
 
-    <Button
-        android:id="@+id/btn_delete"
-        android:layout_width="122dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="16dp"
-        android:background="@color/darker_gray"
-        android:drawableLeft="@drawable/ic_delete_sweep_black_24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.761"
-        app:layout_constraintStart_toEndOf="@+id/btn_fav"
-        app:layout_constraintTop_toBottomOf="@+id/poster"
-        tools:text="@string/delete" />
-
     <ProgressBar
         android:id="@+id/Loading"
         android:layout_width="50dp"
@@ -194,26 +181,41 @@
         app:layout_constraintTop_toBottomOf="@+id/voteCount"
         tools:text="107" />
 
-    <Button
-        android:id="@+id/btn_fav"
-        android:layout_width="108dp"
-        android:layout_height="53dp"
-        android:layout_marginTop="16dp"
-        android:background="@color/colorPrimary"
-        android:drawableLeft="@drawable/ic_favorite_black_24dp"
-        android:text="@string/favorite"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.125"
+    <ImageButton
+        android:id="@+id/icon_favorite_unclicked"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="48dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_favorite_border_white_24dp"
         app:layout_constraintStart_toStartOf="@+id/poster"
-        app:layout_constraintTop_toBottomOf="@+id/poster" />
+        tools:layout_editor_absoluteY="298dp"
+        tools:ignore="MissingConstraints" />
+
+
+    <ImageButton
+        android:id="@+id/icon_favorite_clicked"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="36dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_favorite_clicked"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/poster"
+        tools:layout_editor_absoluteY="286dp"
+        tools:ignore="MissingConstraints" />
 
     <com.github.ivbaranov.mfb.MaterialFavoriteButton
         android:id="@+id/favorite_button"
         android:layout_width="52dp"
         android:layout_height="52dp"
-        android:layout_marginStart="184dp"
-        android:layout_marginTop="60dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="52dp"
+        app:layout_constraintStart_toStartOf="@+id/poster"
         app:layout_constraintTop_toBottomOf="@+id/tvVote"
         app:mfb_type="heart" />
 

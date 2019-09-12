@@ -1,59 +1,96 @@
 package com.diki.submisisatu;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.arch.persistence.room.Room;
+import android.content.ContentValues;
 import android.content.Intent;
-import android.os.AsyncTask;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.diki.submisisatu.Database.AppDatabase;
-import com.diki.submisisatu.Item.Support;
-import com.diki.submisisatu.Model.DataFavoriteMovie;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.diki.submisisatu.Database.DatabaseContract;
 import com.diki.submisisatu.Model.Movie;
-import com.github.ivbaranov.mfb.MaterialFavoriteButton;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
+
+import butterknife.BindView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.diki.submisisatu.BuildConfig.IMAGE_BASE_URL;
+import static com.diki.submisisatu.Database.DatabaseContract.CONTENT_URI;
+import static com.diki.submisisatu.Database.DatabaseContract.FavouriteColumns.BACKDROP_URL;
+import static com.diki.submisisatu.Database.DatabaseContract.FavouriteColumns.HOMEPAGE;
+import static com.diki.submisisatu.Database.DatabaseContract.FavouriteColumns.ORIGINAL_LANGUAGE;
+import static com.diki.submisisatu.Database.DatabaseContract.FavouriteColumns.OVERVIEW;
+import static com.diki.submisisatu.Database.DatabaseContract.FavouriteColumns.POSTER_URL;
+import static com.diki.submisisatu.Database.DatabaseContract.FavouriteColumns.RELEASE_DATE;
+import static com.diki.submisisatu.Database.DatabaseContract.FavouriteColumns.RUNTIME;
+import static com.diki.submisisatu.Database.DatabaseContract.FavouriteColumns.STATUS;
+import static com.diki.submisisatu.Database.DatabaseContract.FavouriteColumns.TAGLINE;
+import static com.diki.submisisatu.Database.DatabaseContract.FavouriteColumns.TITLE;
+import static com.diki.submisisatu.Database.DatabaseContract.FavouriteColumns.VOTE_AVERAGE;
+import static com.diki.submisisatu.Database.DatabaseContract.getColumnString;
 
 
 public class DetailMovieActivity extends AppCompatActivity {
-   private TextView  title, tvRelease, deskripsi, rating, voteCount;
-   private static final String posterPath = BuildConfig.POSTER_PATH;
-   private ImageView circleImageView;
-   private Button buttonDelete, buttonFavorite;
-   private AppDatabase Db;
-   public static final  String EXTRA_MOVIE = "extra_movie";
-   public static final  String TAG = "cek";
-   private ProgressBar loading;
-   private String mPosition;
-   boolean adaData = false;
-   List<DataFavoriteMovie> enter = new ArrayList<>();
-   private AppDatabase db;
+    private TextView title, tvRelease, deskripsi, rating, voteCount;
+    private static final String posterPath = BuildConfig.POSTER_PATH;
+    private ImageView circleImageView;
+    public static final String EXTRA_MOVIE = "extra_movie";
+    public static String MOVIE_ID = "movie_id";
+    public static String LOCAL_STATUS = "local_status";
+    public static final String TAG = "cek";
+    private ProgressBar loading;
+    private String mPosition;
 
-   Movie movie;
-   String poster, name, overview , realeseDate;
-   int movie_id;
+
+    //favoirte
+    @BindView(R.id.icon_favorite_unclicked)
+    ImageButton icFavoriteUnclicked;
+
+    @BindView(R.id.icon_favorite_unclicked)
+    ImageButton icFavoriteClicked;
+
+    @BindView(R.id.tvRelease)
+    TextView movieYear;
+
+    @BindView(R.id.tvTitle)
+    TextView titleMovie;
+
+    @BindView(R.id.tvRating)
+    TextView ratingMovie;
+
+    @BindView(R.id.tvOverview)
+    TextView overviewMovie;
+
+
+    Movie movie;
+    private Uri uri;
+
+    private String check;
+    private int movie_id;
+
+    private boolean favourite;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_movie);
 
-        buttonDelete = findViewById(R.id.btn_delete);
-        buttonFavorite = findViewById(R.id.btn_fav);
+
         circleImageView = findViewById(R.id.poster);
         title = findViewById(R.id.tvName);
         deskripsi = findViewById(R.id.tvOverview);
@@ -63,10 +100,6 @@ public class DetailMovieActivity extends AppCompatActivity {
         loading = findViewById(R.id.Loading);
         setView(false);
         //
-
-
-        db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "db").allowMainThreadQueries().build();
 
         Intent intent = getIntent();
         Movie data = intent.getParcelableExtra(EXTRA_MOVIE);
@@ -87,7 +120,154 @@ public class DetailMovieActivity extends AppCompatActivity {
             Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         }
 
+
+        //favorite
+        if (savedInstanceState != null) {
+            movie = savedInstanceState.getParcelable("movies");
+            checkAgain();
+        } else {
+            checkStatus();
+        }
+
+        icFavoriteUnclicked.setOnClickListener((View.OnClickListener) this);
+        icFavoriteClicked.setOnClickListener((View.OnClickListener) this);
+
+
+        loadSqliteData();
     }
+
+    //favorite
+    private void checkStatus() {
+        if (check.equals("1")) {
+            Log.d(TAG, "onCreate: sama cuy");
+            getMovieSqlite();
+        }
+        if (check.equals("0")) {
+            Log.d(TAG, "onCreate: gak sama cuy");
+            getDetailMovie();
+        }
+    }
+
+    private void checkAgain() {
+        if (check.equals("1")) {
+            Log.d(TAG, "onCreate: sama cuy");
+            getMovieSqlite();
+        }
+        if (check.equals("0")) {
+            Log.d(TAG, "onCreate: gak sama cuy");
+            setMovie();
+        }
+    }
+
+
+    private void getMovieSqlite() {
+        Log.d(TAG, "getMovieSqlite: berjalan");
+
+
+
+        Cursor cursor = getContentResolver().query(uri,
+                null,
+                null,
+                null,
+                null);
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                movie = new Movie();
+
+//                String poster_url = IMAGE_BASE_URL + "w342" + movie.getPosterPath();
+//                String backdrop_url = IMAGE_BASE_URL + "w780" + movie.getBackdropPath();
+
+                title.setText(movie.getOriginalTitle());
+                movieYear.setText(movie.getReleaseDate().split("-")[0]);
+
+                //buat set apabila taglinenya kosong
+
+
+                ratingMovie.setText(movie.getVoteAverage().toString());
+                movieYear.setText(movie.getReleaseDate());
+                overviewMovie.setText(movie.getOverview());
+
+
+
+            }
+            cursor.close();
+        }
+
+    }
+
+
+    private void loadSqliteData() {
+        Cursor cursor = getContentResolver().query(Uri.parse(CONTENT_URI + "/" + movie_id),
+                null,
+                null,
+                null,
+                null);
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                String idIntent = "" + movie_id;
+                String movieId = getColumnString(cursor, DatabaseContract.FavouriteColumns.MOVIE_ID);
+                if (movieId.equals(idIntent)) favourite = true;
+            }
+            cursor.close();
+        } else favourite = false;
+        setFavoriteIcon();
+    }
+
+    private void setFavoriteIcon() {
+        if (favourite) {
+            icFavoriteUnclicked.setVisibility(View.INVISIBLE);
+            icFavoriteClicked.setVisibility(View.VISIBLE);
+        } else {
+            icFavoriteUnclicked.setVisibility(View.VISIBLE);
+            icFavoriteClicked.setVisibility(View.INVISIBLE);
+        }
+    }
+
+
+    public void onClick(View v) {
+        int id = v.getId();
+
+        if (id == R.id.icon_favorite_unclicked) {
+            favourite = true;
+            setFavoriteIcon();
+
+            ContentValues values = new ContentValues();
+
+            Movie movie = null;
+            values.put(MOVIE_ID, movie.getId());
+            values.put(TITLE, movie.getOriginalTitle());
+            values.put(RELEASE_DATE, movie.getReleaseDate());
+//            values.put(TAGLINE, movie.getTagline());
+            values.put(VOTE_AVERAGE, movie.getVoteAverage());
+            values.put(OVERVIEW, movie.getOverview());
+//            values.put(STATUS, detailMovie.getStatus());
+//            values.put(ORIGINAL_LANGUAGE, detailMovie.getOriginalLanguage());
+            values.put(RUNTIME, movie.getRuntime());
+//            values.put(HOMEPAGE, detailMovie.getHomepage());
+            values.put(POSTER_URL, movie.getPosterPath());
+            values.put(BACKDROP_URL, movie.getBackdropPath());
+
+            getContentResolver().insert(CONTENT_URI, values);
+
+            sendUpdateFavoriteList(this);
+
+            Toast.makeText(this, R.string.add_favourite, Toast.LENGTH_SHORT).show();
+
+
+        } else if (id == R.id.icon_favorite_clicked) {
+            favourite = false;
+            setFavoriteIcon();
+
+            getContentResolver().delete(Uri.parse(CONTENT_URI + "/" + movie_id),
+                    null,
+                    null);
+
+            sendUpdateFavoriteList(this);
+
+            Toast.makeText(this, R.string.remove_favourite, Toast.LENGTH_SHORT).show();
+        }
+    }
+//=====================================================================
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
@@ -126,96 +306,6 @@ public class DetailMovieActivity extends AppCompatActivity {
         mPosition = savedInstanceState.getString(EXTRA_MOVIE);
     }
 
-
-    //add to favorite
-    public void saveFavorite(){
-        Double rate = movie.getVoteAverage();
-        final DataFavoriteMovie dataFavoriteMovie = new DataFavoriteMovie(movie_id, name, poster, overview);
-        Support.getInstance().diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-
-                    db.dao().insertFavorite(dataFavoriteMovie);
-
-
-            }
-        });
+    public void setRuntime(int anInt) {
     }
-
-    private void deleteFavorite(final int movie_id){
-        Support.getInstance().diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                db.dao().deleteFavoriteWithId(movie_id);
-            }
-        });
-    }
-
-    @SuppressLint("StaticFieldLeak")
-    private void checkStatus(final String movieName){
-        final MaterialFavoriteButton materialFavoriteButton = (MaterialFavoriteButton) findViewById(R.id.favorite_button);
-        new AsyncTask<Void, Void, Void>(){
-            @Override
-            protected Void doInBackground(Void... params){
-                enter.clear();
-                enter = db.dao().loadAll(movieName);
-                return null;
-            }
-            @Override
-            protected void onPostExecute(Void aVoid){
-                super.onPostExecute(aVoid);
-                if (enter.size() > 0){
-                    materialFavoriteButton.setFavorite(true);
-                    materialFavoriteButton.setOnFavoriteChangeListener(
-                            new MaterialFavoriteButton.OnFavoriteChangeListener() {
-                                @Override
-                                public void onFavoriteChanged(MaterialFavoriteButton buttonView, boolean favorite) {
-                                    if (favorite == true) {
-                                        saveFavorite();
-                                        Snackbar.make(buttonView, "Added to Favorite",
-                                                Snackbar.LENGTH_SHORT).show();
-                                    } else {
-                                        deleteFavorite(movie_id);
-                                        Snackbar.make(buttonView, "Removed from Favorite",
-                                                Snackbar.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
-
-
-                }else {
-                    materialFavoriteButton.setOnFavoriteChangeListener(
-                            new MaterialFavoriteButton.OnFavoriteChangeListener() {
-                                @Override
-                                public void onFavoriteChanged(MaterialFavoriteButton buttonView, boolean favorite) {
-                                    if (favorite == true) {
-                                        saveFavorite();
-                                        Snackbar.make(buttonView, "Added to Favorite",
-                                                Snackbar.LENGTH_SHORT).show();
-                                    } else {
-                                        int movie_id = getIntent().getExtras().getInt("id");
-                                        deleteFavorite(movie_id);
-                                        Snackbar.make(buttonView, "Removed from Favorite",
-                                                Snackbar.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
-                }
-            }
-        }.execute();
-    }
-
-
-
-
-
-
-
-
-    public static Intent getActIntent(Activity activity) {
-        return new Intent(activity, DataFavoriteMovie.class);
-    }
-
-
-
 }

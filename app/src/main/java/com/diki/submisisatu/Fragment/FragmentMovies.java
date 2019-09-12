@@ -34,12 +34,10 @@ import io.reactivex.schedulers.Schedulers;
  * A simple {@link Fragment} subclass.
  */
 public class FragmentMovies extends Fragment {
-    RecyclerView rvCategory;
     private ListMovieAdapter listMovieAdapter;
     private ArrayList<Movie> list  ;
     private static final String API_KEY = BuildConfig.APIKEY;
     private final List<Movie>  movieList = new ArrayList<>();
-    private ProgressBar loading;
     private static final String STATE_RESULT = "state_result";
     private ProgressBar progressBar;
 

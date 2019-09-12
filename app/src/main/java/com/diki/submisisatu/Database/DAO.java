@@ -19,26 +19,12 @@ import java.util.List;
 @Entity
 public interface DAO {
     //  Movie
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    long insertFriend(DataFavoriteMovie friend);
-
-    @Query("SELECT * FROM tMovie")
-    DataFavoriteMovie[] selectAllMovie();
-
-    @Query("SELECT * FROM tMovie WHERE id = :id LIMIT 1")
-    DataFavoriteMovie selectFriend(String id);
-
-    @Update
-    int updateFriend(DataFavoriteMovie friend);
-
-    @Delete
-    int deleteFriend(DataFavoriteMovie friend);
 
     @Query("SELECT * FROM tMovie")
     LiveData<List<DataFavoriteMovie>> loadAllFavorite();
 
-    @Query("SELECT * FROM tMovie WHERE OriginalTitle = :title")
-    List<DataFavoriteMovie> loadAll(String title);
+    @Query("SELECT * FROM tMovie WHERE name = :name")
+    List<DataFavoriteMovie> loadAll(String name);
 
     @Insert
     void insertFavorite(DataFavoriteMovie dataFavoriteMovie);
