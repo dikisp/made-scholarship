@@ -1,47 +1,43 @@
 package com.diki.submisisatu;
 
-import android.content.ContentValues;
+import android.annotation.SuppressLint;
+import android.app.Service;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.diki.submisisatu.Database.DatabaseContract;
+import com.diki.submisisatu.Adapter.ListMovieAdapter;
+import com.diki.submisisatu.Api.RetrofitApi;
+import com.diki.submisisatu.Database.AppDatabase;
+import com.diki.submisisatu.Favorite.FavoriteMovie;
+import com.diki.submisisatu.Model.DataFavoriteMovie;
 import com.diki.submisisatu.Model.Movie;
+import com.diki.submisisatu.data.AppExecutors;
+import com.diki.submisisatu.data.FavoriteDbHelper;
+import com.github.ivbaranov.mfb.MaterialFavoriteButton;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-import butterknife.BindView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.diki.submisisatu.BuildConfig.IMAGE_BASE_URL;
-import static com.diki.submisisatu.Database.DatabaseContract.CONTENT_URI;
-import static com.diki.submisisatu.Database.DatabaseContract.FavouriteColumns.BACKDROP_URL;
-import static com.diki.submisisatu.Database.DatabaseContract.FavouriteColumns.HOMEPAGE;
-import static com.diki.submisisatu.Database.DatabaseContract.FavouriteColumns.ORIGINAL_LANGUAGE;
-import static com.diki.submisisatu.Database.DatabaseContract.FavouriteColumns.OVERVIEW;
-import static com.diki.submisisatu.Database.DatabaseContract.FavouriteColumns.POSTER_URL;
-import static com.diki.submisisatu.Database.DatabaseContract.FavouriteColumns.RELEASE_DATE;
-import static com.diki.submisisatu.Database.DatabaseContract.FavouriteColumns.RUNTIME;
-import static com.diki.submisisatu.Database.DatabaseContract.FavouriteColumns.STATUS;
-import static com.diki.submisisatu.Database.DatabaseContract.FavouriteColumns.TAGLINE;
-import static com.diki.submisisatu.Database.DatabaseContract.FavouriteColumns.TITLE;
-import static com.diki.submisisatu.Database.DatabaseContract.FavouriteColumns.VOTE_AVERAGE;
-import static com.diki.submisisatu.Database.DatabaseContract.getColumnString;
 
 
 public class DetailMovieActivity extends AppCompatActivity {
@@ -55,32 +51,18 @@ public class DetailMovieActivity extends AppCompatActivity {
     private ProgressBar loading;
     private String mPosition;
 
-
-    //favoirte
-    @BindView(R.id.icon_favorite_unclicked)
-    ImageButton icFavoriteUnclicked;
-
-    @BindView(R.id.icon_favorite_unclicked)
-    ImageButton icFavoriteClicked;
-
-    @BindView(R.id.tvRelease)
-    TextView movieYear;
-
-    @BindView(R.id.tvTitle)
-    TextView titleMovie;
-
-    @BindView(R.id.tvRating)
-    TextView ratingMovie;
-
-    @BindView(R.id.tvOverview)
-    TextView overviewMovie;
-
-
     Movie movie;
     private Uri uri;
+    private  RecyclerView recyclerView;
+    private ListMovieAdapter adapter;
 
-    private String check;
-    private int movie_id;
+
+    String posterMovie , movieName,overview,ratingMovie,dateOfRelease;
+    int movie_id;
+    List<DataFavoriteMovie> entries = new ArrayList<>();
+
+    private AppDatabase db;
+
 
     private boolean favourite;
 
@@ -90,6 +72,8 @@ public class DetailMovieActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_movie);
 
+        FavoriteDbHelper dbHelper = new FavoriteDbHelper(this);
+        db = AppDatabase.getInstance(getApplicationContext());
 
         circleImageView = findViewById(R.id.poster);
         title = findViewById(R.id.tvName);
@@ -103,8 +87,40 @@ public class DetailMovieActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         Movie data = intent.getParcelableExtra(EXTRA_MOVIE);
-//        Log.d("cek",data.getOriginalTitle());
         Log.d("cek", data.toString());
+
+
+
+
+        Intent intentThatStartedThisActivity = getIntent();
+        if (intentThatStartedThisActivity.hasExtra("movies")){
+
+            movie = getIntent().getParcelableExtra("movies");
+
+            posterMovie = movie.getPosterPath();
+            movieName = movie.getOriginalTitle();
+            overview = movie.getOverview();
+            ratingMovie = Double.toString(movie.getVoteAverage());
+            dateOfRelease = movie.getReleaseDate();
+            movie_id = movie.getId();
+
+            String poster = "https://image.tmdb.org/t/p/w500" + posterMovie;
+
+            Glide.with(this)
+                    .load(poster + data.getPosterPath())
+                    .into(circleImageView);
+
+              title.setText(movieName);
+            deskripsi.setText(overview);
+            rating.setText(ratingMovie);
+            tvRelease.setText(dateOfRelease);
+
+            //TODO
+
+        }else{
+            Toast.makeText(this, "No API Data", Toast.LENGTH_SHORT).show();
+        }
+
 
         if (data != null) {
             setView(true);
@@ -119,50 +135,124 @@ public class DetailMovieActivity extends AppCompatActivity {
 
             Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         }
-
-
-        //favorite
-        if (savedInstanceState != null) {
-            movie = savedInstanceState.getParcelable("movies");
-            checkAgain();
-        } else {
-            checkStatus();
-        }
-
-        icFavoriteUnclicked.setOnClickListener((View.OnClickListener) this);
-        icFavoriteClicked.setOnClickListener((View.OnClickListener) this);
-
-
-        loadSqliteData();
+        checkStatus(movieName);
+        initViews();
     }
 
-    //favorite
-    private void checkStatus() {
-        if (check.equals("1")) {
-            Log.d(TAG, "onCreate: sama cuy");
-            getMovieSqlite();
-        }
-        if (check.equals("0")) {
-            Log.d(TAG, "onCreate: gak sama cuy");
-            getDetailMovie();
-        }
+    @SuppressLint("StaticFieldLeak")
+    private void checkStatus(final String movieName){
+        final MaterialFavoriteButton materialFavoriteButton = (MaterialFavoriteButton) findViewById(R.id.favorite_button);
+        new AsyncTask<Void, Void, Void>(){
+            @Override
+            protected Void doInBackground(Void... params){
+                entries.clear();
+                entries = db.dao().loadAll(movieName);
+                return null;
+            }
+            @Override
+            protected void onPostExecute(Void aVoid){
+                super.onPostExecute(aVoid);
+                if (entries.size() > 0){
+                    materialFavoriteButton.setFavorite(true);
+                    materialFavoriteButton.setOnFavoriteChangeListener(
+                            new MaterialFavoriteButton.OnFavoriteChangeListener() {
+                                @Override
+                                public void onFavoriteChanged(MaterialFavoriteButton buttonView, boolean favorite) {
+                                    if (favorite == true) {
+                                        saveFavorite();
+                                        Snackbar.make(buttonView, "Added to Favorite",
+                                                Snackbar.LENGTH_SHORT).show();
+                                    } else {
+                                        deleteFavorite(movie_id);
+                                        Snackbar.make(buttonView, "Removed from Favorite",
+                                                Snackbar.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+
+
+                }else {
+                    materialFavoriteButton.setOnFavoriteChangeListener(
+                            new MaterialFavoriteButton.OnFavoriteChangeListener() {
+                                @Override
+                                public void onFavoriteChanged(MaterialFavoriteButton buttonView, boolean favorite) {
+                                    if (favorite == true) {
+                                        saveFavorite();
+                                        Snackbar.make(buttonView, "Added to Favorite",
+                                                Snackbar.LENGTH_SHORT).show();
+                                    } else {
+                                        int movie_id = getIntent().getExtras().getInt("id");
+                                        deleteFavorite(movie_id);
+                                        Snackbar.make(buttonView, "Removed from Favorite",
+                                                Snackbar.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                }
+            }
+        }.execute();
     }
 
-    private void checkAgain() {
-        if (check.equals("1")) {
-            Log.d(TAG, "onCreate: sama cuy");
-            getMovieSqlite();
-        }
-        if (check.equals("0")) {
-            Log.d(TAG, "onCreate: gak sama cuy");
-            setMovie();
+    //add to favorite
+    public void saveFavorite(){
+        Double rate = movie.getVoteAverage();
+        final DataFavoriteMovie favoriteEntry = new DataFavoriteMovie(movie_id, movieName, rate, posterMovie, overview);
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                db.dao().insertFavorite(favoriteEntry);
+            }
+        });
+    }
+
+    private void deleteFavorite(final int movie_id){
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                db.dao().deleteFavoriteWithId(movie_id);
+            }
+        });
+    }
+
+//    @SuppressLint("WrongViewCast")
+    private void initViews(){
+
+//        recyclerView = (RecyclerView) findViewById(R.id.rv_listMovie);
+//        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+//        recyclerView.setLayoutManager(mLayoutManager);
+//        recyclerView.setAdapter(adapter);
+//        adapter.notifyDataSetChanged();
+
+        loadJSON();
+        loadReview();
+    }
+
+    private void loadReview() {
+    }
+
+    private void loadJSON() {
+        try{
+            if (BuildConfig.APIKEY.isEmpty()){
+                Toast.makeText(getApplicationContext(), "Please get your API Key", Toast.LENGTH_SHORT).show();
+                return;
+            }else {
+                RetrofitApi Client = new RetrofitApi();
+                Service apiService = Client.getClient().create(Service.class);
+
+
+
+                }
+
+
+        } catch(Exception e){
+            Log.d("Error", e.getMessage());
+            Toast.makeText(this,e.toString(),Toast.LENGTH_SHORT).show();
         }
     }
 
 
     private void getMovieSqlite() {
         Log.d(TAG, "getMovieSqlite: berjalan");
-
 
 
         Cursor cursor = getContentResolver().query(uri,
@@ -174,20 +264,7 @@ public class DetailMovieActivity extends AppCompatActivity {
             if (cursor.moveToFirst()) {
                 movie = new Movie();
 
-//                String poster_url = IMAGE_BASE_URL + "w342" + movie.getPosterPath();
-//                String backdrop_url = IMAGE_BASE_URL + "w780" + movie.getBackdropPath();
-
                 title.setText(movie.getOriginalTitle());
-                movieYear.setText(movie.getReleaseDate().split("-")[0]);
-
-                //buat set apabila taglinenya kosong
-
-
-                ratingMovie.setText(movie.getVoteAverage().toString());
-                movieYear.setText(movie.getReleaseDate());
-                overviewMovie.setText(movie.getOverview());
-
-
 
             }
             cursor.close();
@@ -195,82 +272,10 @@ public class DetailMovieActivity extends AppCompatActivity {
 
     }
 
-
-    private void loadSqliteData() {
-        Cursor cursor = getContentResolver().query(Uri.parse(CONTENT_URI + "/" + movie_id),
-                null,
-                null,
-                null,
-                null);
-        if (cursor != null) {
-            if (cursor.moveToFirst()) {
-                String idIntent = "" + movie_id;
-                String movieId = getColumnString(cursor, DatabaseContract.FavouriteColumns.MOVIE_ID);
-                if (movieId.equals(idIntent)) favourite = true;
-            }
-            cursor.close();
-        } else favourite = false;
-        setFavoriteIcon();
-    }
-
-    private void setFavoriteIcon() {
-        if (favourite) {
-            icFavoriteUnclicked.setVisibility(View.INVISIBLE);
-            icFavoriteClicked.setVisibility(View.VISIBLE);
-        } else {
-            icFavoriteUnclicked.setVisibility(View.VISIBLE);
-            icFavoriteClicked.setVisibility(View.INVISIBLE);
-        }
-    }
-
-
-    public void onClick(View v) {
-        int id = v.getId();
-
-        if (id == R.id.icon_favorite_unclicked) {
-            favourite = true;
-            setFavoriteIcon();
-
-            ContentValues values = new ContentValues();
-
-            Movie movie = null;
-            values.put(MOVIE_ID, movie.getId());
-            values.put(TITLE, movie.getOriginalTitle());
-            values.put(RELEASE_DATE, movie.getReleaseDate());
-//            values.put(TAGLINE, movie.getTagline());
-            values.put(VOTE_AVERAGE, movie.getVoteAverage());
-            values.put(OVERVIEW, movie.getOverview());
-//            values.put(STATUS, detailMovie.getStatus());
-//            values.put(ORIGINAL_LANGUAGE, detailMovie.getOriginalLanguage());
-            values.put(RUNTIME, movie.getRuntime());
-//            values.put(HOMEPAGE, detailMovie.getHomepage());
-            values.put(POSTER_URL, movie.getPosterPath());
-            values.put(BACKDROP_URL, movie.getBackdropPath());
-
-            getContentResolver().insert(CONTENT_URI, values);
-
-            sendUpdateFavoriteList(this);
-
-            Toast.makeText(this, R.string.add_favourite, Toast.LENGTH_SHORT).show();
-
-
-        } else if (id == R.id.icon_favorite_clicked) {
-            favourite = false;
-            setFavoriteIcon();
-
-            getContentResolver().delete(Uri.parse(CONTENT_URI + "/" + movie_id),
-                    null,
-                    null);
-
-            sendUpdateFavoriteList(this);
-
-            Toast.makeText(this, R.string.remove_favourite, Toast.LENGTH_SHORT).show();
-        }
-    }
-//=====================================================================
+    //=====================================================================
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
                 return true;
@@ -278,15 +283,14 @@ public class DetailMovieActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void setView(Boolean status){
-        if(status){
+    private void setView(Boolean status) {
+        if (status) {
             loading.setVisibility(View.GONE);
             circleImageView.setVisibility(View.VISIBLE);
             title.setVisibility(View.VISIBLE);
             rating.setVisibility(View.VISIBLE);
             deskripsi.setVisibility(View.VISIBLE);
-        }
-        else{
+        } else {
             loading.setVisibility(View.VISIBLE);
             circleImageView.setVisibility(View.GONE);
             title.setVisibility(View.GONE);
@@ -296,12 +300,12 @@ public class DetailMovieActivity extends AppCompatActivity {
     }
 
     //rotate
-    protected void onSaveInstanceState (final Bundle outState){
+    protected void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString(EXTRA_MOVIE,mPosition);
+        outState.putString(EXTRA_MOVIE, mPosition);
     }
 
-    protected void onRestoreInstanceState(final Bundle savedInstanceState){
+    protected void onRestoreInstanceState(final Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         mPosition = savedInstanceState.getString(EXTRA_MOVIE);
     }

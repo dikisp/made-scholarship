@@ -7,9 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import static com.diki.submisisatu.Database.DatabaseContract.TABLE_FAVOURITE;
 
-/**
- * Created by Alvin Tandiardi on 05/09/2018.
- */
+
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
