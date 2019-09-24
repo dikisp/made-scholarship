@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 
-import static com.diki.submisisatu.Database.DatabaseContract.TABLE_FAVOURITE;
+import static com.diki.submisisatu.Database.DatabaseContract.TABLE_FAVORITE;
 
 
 
@@ -20,29 +20,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     "%s TEXT NOT NULL," +
                     "%s TEXT NOT NULL," +
                     "%s TEXT NOT NULL," +
-                    "%s TEXT," +
-                    "%s TEXT," +
-                    "%s TEXT," +
-                    "%s TEXT," +
-                    "%s TEXT," +
-                    "%s TEXT," +
-                    "%s TEXT," +
-                    "%s TEXT," +
+                    "%s TEXT NOT NULL," +
+                    "%s TEXT NOT NULL," +
+                    "%s TEXT NOT NULL," +
+                    "%s TEXT NOT NULL," +
                     "%s TEXT)",
-            TABLE_FAVOURITE,
+            TABLE_FAVORITE,
             DatabaseContract.FavouriteColumns._ID,
             DatabaseContract.FavouriteColumns.MOVIE_ID,
             DatabaseContract.FavouriteColumns.TITLE,
             DatabaseContract.FavouriteColumns.RELEASE_DATE,
-            DatabaseContract.FavouriteColumns.TAGLINE,
-            DatabaseContract.FavouriteColumns.VOTE_AVERAGE,
+            DatabaseContract.FavouriteColumns.VOTE_COUNT,
             DatabaseContract.FavouriteColumns.OVERVIEW,
-            DatabaseContract.FavouriteColumns.STATUS,
             DatabaseContract.FavouriteColumns.ORIGINAL_LANGUAGE,
-            DatabaseContract.FavouriteColumns.RUNTIME,
-            DatabaseContract.FavouriteColumns.HOMEPAGE,
             DatabaseContract.FavouriteColumns.POSTER_URL,
-            DatabaseContract.FavouriteColumns.BACKDROP_URL
+            DatabaseContract.FavouriteColumns.CATEGORY
     );
 
     public DatabaseHelper(Context context) {
@@ -56,7 +48,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_FAVOURITE);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_FAVORITE);
         onCreate(db);
     }
 }

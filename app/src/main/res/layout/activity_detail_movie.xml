@@ -181,34 +181,6 @@
         app:layout_constraintTop_toBottomOf="@+id/voteCount"
         tools:text="107" />
 
-    <ImageButton
-        android:id="@+id/icon_favorite_unclicked"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginStart="48dp"
-        android:background="@android:color/transparent"
-        android:src="@drawable/ic_favorite_border_white_24dp"
-        app:layout_constraintStart_toStartOf="@+id/poster"
-        tools:layout_editor_absoluteY="298dp"
-        tools:ignore="MissingConstraints" />
-
-
-    <ImageButton
-        android:id="@+id/icon_favorite_clicked"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginStart="36dp"
-        android:background="@android:color/transparent"
-        android:src="@drawable/ic_favorite_clicked"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@+id/poster"
-        tools:layout_editor_absoluteY="286dp"
-        tools:ignore="MissingConstraints" />
-
     <com.github.ivbaranov.mfb.MaterialFavoriteButton
         android:id="@+id/favorite_button"
         android:layout_width="52dp"

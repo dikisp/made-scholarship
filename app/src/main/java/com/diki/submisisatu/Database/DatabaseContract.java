@@ -7,7 +7,7 @@ import android.provider.BaseColumns;
 
 public class DatabaseContract {
 
-    public static String TABLE_FAVOURITE = "favourite";
+    public static String TABLE_FAVORITE = "favorite";
 
     public static final class FavouriteColumns implements BaseColumns {
 
@@ -17,23 +17,22 @@ public class DatabaseContract {
 
         public static String RELEASE_DATE = "release_date";
 
-        public static String TAGLINE = "tagline";
 
-        public static String VOTE_AVERAGE = "vote_average";
+        public static String VOTE_COUNT = "vote_count";
 
         public static String OVERVIEW = "overview";
 
-        public static String STATUS = "status";
 
         public static String ORIGINAL_LANGUAGE = "original_language";
 
-        public static String RUNTIME = "runtime";
-
-        public static String HOMEPAGE = "homepage";
 
         public static String POSTER_URL = "poster_url";
 
-        public static String BACKDROP_URL = "backdrop_url";
+        public static String BACKDROP_PATH = "backdrop";
+
+        public static final String CATEGORY = "category";
+
+
 
     }
 
@@ -41,7 +40,7 @@ public class DatabaseContract {
 
     public static final Uri CONTENT_URI = new Uri.Builder().scheme("content")
             .authority(AUTHORITY)
-            .appendPath(TABLE_FAVOURITE)
+            .appendPath(TABLE_FAVORITE)
             .build();
 
     public static String getColumnString(Cursor cursor, String columnName) {

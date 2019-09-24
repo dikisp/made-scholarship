@@ -21,54 +21,6 @@ public class Movie implements Parcelable {
     @SerializedName("popularity")
     private double popularity;
 
-    public Movie() {
-
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setVoteAverage(double voteAverage) {
-        this.voteAverage = voteAverage;
-    }
-
-    public void setVoteCount(double voteCount) {
-        this.voteCount = voteCount;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setPopularity(double popularity) {
-        this.popularity = popularity;
-    }
-
-    public void setBackdropPath(String backdropPath) {
-        this.backdropPath = backdropPath;
-    }
-
-    public void setOverview(String overview) {
-        this.overview = overview;
-    }
-
-    public void setReleaseDate(String releaseDate) {
-        this.releaseDate = releaseDate;
-    }
-
-    public void setPosterPath(String posterPath) {
-        this.posterPath = posterPath;
-    }
-
-    public void setRuntime(int runtime) {
-        this.runtime = runtime;
-    }
-
-    public void setRating(int rating) {
-        this.rating = rating;
-    }
-
     @SerializedName("backdrop_path")
     private  String backdropPath;
     @SerializedName("overview")
@@ -82,7 +34,11 @@ public class Movie implements Parcelable {
     @SerializedName("rating")
     private int rating;
 
-    public Movie(Parcel in) {
+    public Movie() {
+
+    }
+
+    protected Movie(Parcel in) {
         id = in.readInt();
         voteAverage = in.readDouble();
         voteCount = in.readDouble();
@@ -113,12 +69,24 @@ public class Movie implements Parcelable {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public double getVoteAverage() {
         return voteAverage;
     }
 
+    public void setVoteAverage(double voteAverage) {
+        this.voteAverage = voteAverage;
+    }
+
     public double getVoteCount() {
         return voteCount;
+    }
+
+    public void setVoteCount(double voteCount) {
+        this.voteCount = voteCount;
     }
 
     public String getOriginalTitle() {
@@ -133,30 +101,65 @@ public class Movie implements Parcelable {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public double getPopularity() {
         return popularity;
+    }
+
+    public void setPopularity(double popularity) {
+        this.popularity = popularity;
     }
 
     public String getBackdropPath() {
         return backdropPath;
     }
 
+    public void setBackdropPath(String backdropPath) {
+        this.backdropPath = backdropPath;
+    }
+
     public String getOverview() {
         return overview;
+    }
+
+    public void setOverview(String overview) {
+        this.overview = overview;
     }
 
     public String getReleaseDate() {
         return releaseDate;
     }
 
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
     public String getPosterPath() {
         return posterPath;
+    }
+
+    public void setPosterPath(String posterPath) {
+        this.posterPath = posterPath;
     }
 
     public int getRuntime() {
         return runtime;
     }
 
+    public void setRuntime(int runtime) {
+        this.runtime = runtime;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
 
     @Override
     public int describeContents() {
@@ -164,17 +167,18 @@ public class Movie implements Parcelable {
     }
 
     @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(id);
-        parcel.writeDouble(voteAverage);
-        parcel.writeDouble(voteCount);
-        parcel.writeString(originalTitle);
-        parcel.writeString(name);
-        parcel.writeDouble(popularity);
-        parcel.writeString(backdropPath);
-        parcel.writeString(overview);
-        parcel.writeString(releaseDate);
-        parcel.writeString(posterPath);
-        parcel.writeInt(runtime);
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeDouble(voteAverage);
+        dest.writeDouble(voteCount);
+        dest.writeString(originalTitle);
+        dest.writeString(name);
+        dest.writeDouble(popularity);
+        dest.writeString(backdropPath);
+        dest.writeString(overview);
+        dest.writeString(releaseDate);
+        dest.writeString(posterPath);
+        dest.writeInt(runtime);
+        dest.writeInt(rating);
     }
 }

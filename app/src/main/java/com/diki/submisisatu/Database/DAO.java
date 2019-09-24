@@ -10,7 +10,7 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Update;
 
-import com.diki.submisisatu.Model.DataFavoriteMovie;
+import com.diki.submisisatu.Model.FavoriteMovie;
 
 import java.util.List;
 
@@ -20,24 +20,24 @@ import java.util.List;
 public interface DAO {
     //  Movie
 
-    @Query("SELECT * FROM tMovie")
-    LiveData<List<DataFavoriteMovie>> loadAllFavorite();
+    @Query("SELECT * FROM FavoriteMovie")
+    LiveData<List<FavoriteMovie>> loadAllFavorite();
 
-    @Query("SELECT * FROM tMovie WHERE name = :name")
-    List<DataFavoriteMovie> loadAll(String name);
+    @Query("SELECT * FROM FavoriteMovie WHERE move_id = :moveid")
+    List<FavoriteMovie> loadAll(String moveid);
 
     @Insert
-    void insertFavorite(DataFavoriteMovie dataFavoriteMovie);
+    long insertFavorite(FavoriteMovie favoriteMovie);
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    void updateFavorite(DataFavoriteMovie dataFavoriteMovie);
+    void updateFavorite(FavoriteMovie favoriteMovie);
 
     @Delete
-    void deleteFavorite(DataFavoriteMovie dataFavoriteMovie);
+    void deleteFavorite(FavoriteMovie favoriteMovie);
 
-    @Query("DELETE FROM tMovie WHERE movieid = :movie_id")
-    void deleteFavoriteWithId(int movie_id);
+//    @Query("DELETE FROM tMovie WHERE movieid = :movie_id")
+//    void deleteFavoriteWithId(int movie_id);
 
-    @Query("SELECT * FROM tMovie WHERE id = :id")
-    LiveData<DataFavoriteMovie> loadFavoriteById(int id);
+//    @Query("SELECT * FROM tMovie WHERE id = :id")
+//    LiveData<FavoriteMovie> loadFavoriteById(int id);
 }

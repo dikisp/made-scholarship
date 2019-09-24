@@ -6,9 +6,9 @@ import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.util.Log;
 
-import com.diki.submisisatu.Model.DataFavoriteMovie;
+import com.diki.submisisatu.Model.FavoriteMovie;
 
-@Database(entities =  {DataFavoriteMovie.class}, version = 1,exportSchema = false)
+@Database(entities =  {FavoriteMovie.class}, version = 1,exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     private static final String LOG_TAG = AppDatabase.class.getSimpleName();
     private static final Object LOCK = new Object();
