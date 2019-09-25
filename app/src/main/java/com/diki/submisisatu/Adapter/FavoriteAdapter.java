@@ -1,11 +1,9 @@
 package com.diki.submisisatu.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,129 +11,111 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.diki.submisisatu.BuildConfig;
-import com.diki.submisisatu.DetailMovieActivity;
-import com.diki.submisisatu.Item.CustomOnItemClickListener;
-import com.diki.submisisatu.Model.Movie;
+import com.bumptech.glide.request.RequestOptions;
+import com.diki.submisisatu.Model.FavoriteMovie;
 import com.diki.submisisatu.R;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.diki.submisisatu.Database.DatabaseContract.CONTENT_URI;
+import static com.diki.submisisatu.BuildConfig.POSTER_PATH;
 
-public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHolder> {
+public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Viewholder> {
+    public class Viewholder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        final PostListListener mListListener;
+        @BindView(R.id.img_item_fotoFav)
+        ImageView listMoviePoster;
+        @BindView(R.id.realease)
+        TextView listMovieReleaseDate;
+        @BindView(R.id.tvTitle)
+        TextView listMovieTitle;
+        @BindView(R.id.tv_item_remarksFav)
+        TextView listMovieRating;
+        @BindView(R.id.rv_listMovieFav)
+        RecyclerView btnMovie;
 
-    private static final String TAG = "RecyclerFavouriteAdapte";
-    private final static String IMAGE_BASE_URL = BuildConfig.IMAGE_BASE_URL;
+        Viewholder(View itemView, PostListListener postListListener) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
 
-    private Cursor listFavourite;
-    private Context context;
+            this.mListListener = postListListener;
+            itemView.setOnClickListener(this);
+        }
 
-    public FavoriteAdapter(Cursor items, Context context) {
-        this.context = context;
-        setListFavourite(items);
+        @Override
+        public void onClick(View view) {
+            FavoriteMovie favoriteMovie = getItem(getAdapterPosition());
+            this.mListListener.onPostClick(favoriteMovie.getmId());
+            notifyDataSetChanged();
+        }
+    }
+    private final ArrayList<FavoriteMovie> favorites = new ArrayList<>();
+    private final Activity activity;
+    private final PostListListener postItemListener;
+
+    public FavoriteAdapter(Activity activity, PostListListener postItemListener) {
+        this.activity = activity;
+        this.postItemListener = postItemListener;
     }
 
-    public void setListFavourite(Cursor listFavourite) {
-        this.listFavourite = listFavourite;
+
+
+    public ArrayList<FavoriteMovie> getListFavorite() {
+        return favorites;
+    }
+
+    public void setListFavorite(ArrayList<FavoriteMovie> listFavorite) {
+
+        if (listFavorite.size() > 0) {
+            this.favorites.clear();
+        }
+        this.favorites.addAll(listFavorite);
+
         notifyDataSetChanged();
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_row_movie, parent, false);
-        return new ViewHolder(view);
+    public Viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        Context context = parent.getContext();
+        LayoutInflater inflater = LayoutInflater.from(context);
+
+        View postView = inflater.inflate(R.layout.list_favorite, parent, false);
+
+        return new Viewholder(postView, this.postItemListener);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-
-        Log.d(TAG, "onBindViewHolder: called");
-
-        final Movie detailMovie = getItem(position);
-
-        String poster_url = IMAGE_BASE_URL + "w185" + detailMovie.getPosterPath();
-
-        Glide.with(context)
-                .load(poster_url)
-                .into(holder.imgMoviePoster);
-
-        holder.tvMovieTitle.setText(detailMovie.getOriginalTitle());
-        holder.tvMovieDescription.setText(detailMovie.getOverview());
-        holder.tvMovieDate.setText(dateFormat(detailMovie.getReleaseDate()));
-        holder.parentMovieCard.setOnClickListener(new CustomOnItemClickListener(position, new CustomOnItemClickListener.OnItemClickCallback() {
-            @Override
-            public void onItemClicked(View view, int position) {
-                String local = "1";
-                Intent intent = new Intent(context, DetailMovieActivity.class);
-
-                Uri uri = Uri.parse(CONTENT_URI + "/" + detailMovie.getId());
-                intent.putExtra(DetailMovieActivity.MOVIE_ID, detailMovie.getId());
-                intent.putExtra(DetailMovieActivity.LOCAL_STATUS, local);
-                intent.setData(uri);
-                context.startActivity(intent);
-            }
-        }));
-
+    public void onBindViewHolder(@NonNull Viewholder holder, int position) {
+        FavoriteMovie favorite = favorites.get(position);
+        if (favorite.getOriginalTitle().length() > 15) {
+            holder.listMovieTitle.setText((favorite.getOriginalTitle().substring(0, 15) + "..."));
+        } else {
+            holder.listMovieTitle.setText(favorite.getOriginalTitle());
+        }
+        holder.listMovieRating.setText(favorite.getRating());
+        holder.listMovieReleaseDate.setText(favorite.getReleaseDate().split("-")[0]);
+        Glide.with(activity)
+                .load(POSTER_PATH + favorites.get(position).getPosterPath())
+                .apply(RequestOptions.placeholderOf(R.color.colorPrimary))
+                .into(holder.listMoviePoster);
     }
 
     @Override
     public int getItemCount() {
-        if (listFavourite == null) return 0;
-        return listFavourite.getCount();
+        return favorites.size();
     }
 
-    private Movie getItem(int position) {
-        if (!listFavourite.moveToPosition(position)) {
-            throw new IllegalStateException("Position Invalid");
-        }
-        return new Movie();
+    private FavoriteMovie getItem(int adapterPosition) {
+        return favorites.get(adapterPosition);
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-
-        @BindView(R.id.rv_listMovie)
-        RecyclerView parentMovieCard;
-
-        @BindView(R.id.img_item_foto)
-        ImageView imgMoviePoster;
-
-        @BindView(R.id.tvTitle)
-        TextView tvMovieTitle;
-
-        @BindView(R.id.tvOverview)
-        TextView tvMovieDescription;
-
-        @BindView(R.id.tvRelease)
-        TextView tvMovieDate;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-        }
+    public interface PostListListener {
+        void onPostClick(int mId);
     }
 
-    private String dateFormat(String oldDate) {
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date myDate = null;
-        try {
-            myDate = dateFormat.parse(oldDate);
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        SimpleDateFormat newFormat = new SimpleDateFormat("EEEE, MMM dd, yyyy");
-        String finalDate = newFormat.format(myDate);
-
-        return finalDate;
-
-    }
 
 }

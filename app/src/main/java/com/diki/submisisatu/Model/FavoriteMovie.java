@@ -1,16 +1,16 @@
 package com.diki.submisisatu.Model;
 
-import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 
-@Entity(tableName = "tMovie")
 public class FavoriteMovie implements Parcelable{
+public  FavoriteMovie(){
 
-    public static final Parcelable.Creator<FavoriteMovie> CREATOR = new Parcelable.Creator<FavoriteMovie>() {
+}
+
+    public static final Creator<FavoriteMovie> CREATOR = new Creator<FavoriteMovie>() {
         @Override
         public FavoriteMovie createFromParcel(Parcel in) {
             return new FavoriteMovie(in);

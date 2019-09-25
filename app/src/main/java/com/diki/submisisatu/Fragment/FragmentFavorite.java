@@ -10,8 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.diki.submisisatu.Favorite.FavoriteMovie;
-import com.diki.submisisatu.Favorite.FavoriteTvShow;
+import com.diki.submisisatu.Fragment.Favorite.FragmentFavoriteMovie;
+import com.diki.submisisatu.Fragment.Favorite.FragmentTvFavorite;
 import com.diki.submisisatu.R;
 
 import java.util.ArrayList;
@@ -29,8 +29,9 @@ public class FragmentFavorite extends Fragment {
 
     private void setupViewPager(ViewPager viewPager) {
         adapter = new Adapter(getChildFragmentManager());
-        adapter.addFragment(new FavoriteMovie(), "Movie");
-        adapter.addFragment(new FavoriteTvShow(), "Tv Show");
+        adapter.addFragment(new FragmentFavoriteMovie(), "Movie");
+        adapter.addFragment(new FragmentTvFavorite(), "TV Show");
+//        adapter.addFragment(new FragmentTvShow(), "Tv Show");
         viewPager.setAdapter(adapter);
     }
 

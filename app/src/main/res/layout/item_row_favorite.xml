@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:layout_height="wrap_content"
-    android:id="@+id/rv_listMovie"
+    android:id="@+id/rv_listMovieFav"
     android:padding="@dimen/activity_vertical_margin">
 
     <de.hdodenhof.circleimageview.CircleImageView

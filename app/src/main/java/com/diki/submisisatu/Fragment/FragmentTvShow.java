@@ -12,13 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
-import com.diki.submisisatu.Adapter.ListMovieAdapter;
 import com.diki.submisisatu.Adapter.TvShowAdapter;
 import com.diki.submisisatu.Api.MovieApi;
 import com.diki.submisisatu.Api.RetrofitApi;
 import com.diki.submisisatu.Api.Scraper;
 import com.diki.submisisatu.BuildConfig;
-import com.diki.submisisatu.Model.Movie;
 import com.diki.submisisatu.Model.TV;
 import com.diki.submisisatu.R;
 
@@ -38,9 +36,9 @@ import io.reactivex.schedulers.Schedulers;
 public class FragmentTvShow extends Fragment {
     RecyclerView rvCategory;
     private TvShowAdapter listMovieAdapter;
-    private ArrayList<TV> list  ;
+    private ArrayList<TV> list;
     private static final String API_KEY = BuildConfig.APIKEY;
-    private final List<TV>  movieList = new ArrayList<>();
+    private final List<TV> movieList = new ArrayList<>();
     private ProgressBar loading;
     private static final String STATE_RESULT = "state_result";
     private ProgressBar progressBar;
@@ -57,19 +55,18 @@ public class FragmentTvShow extends Fragment {
         RecyclerView rvMainMovie = view.findViewById(R.id.lv_movies);
         progressBar = view.findViewById(R.id.Loading);
         progressBar.setVisibility(View.VISIBLE);
-        list =  new ArrayList<>();
+        list = new ArrayList<>();
 
 
-        if(savedInstanceState != null){
+        if (savedInstanceState != null) {
             list = savedInstanceState.getParcelableArrayList(STATE_RESULT);
             movieList.addAll(Objects.requireNonNull(list));
             progressBar.setVisibility(View.GONE);
-        }
-        else {
+        } else {
             fetchDataMovie();
         }
 
-        listMovieAdapter = new TvShowAdapter(getContext(),list);
+        listMovieAdapter = new TvShowAdapter(getContext(), list);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         rvMainMovie.setLayoutManager(layoutManager);
         rvMainMovie.setAdapter(listMovieAdapter);
@@ -84,7 +81,7 @@ public class FragmentTvShow extends Fragment {
     }
 
 
-    private  void fetchDataMovie(){
+    private void fetchDataMovie() {
         MovieApi movieApi = RetrofitApi.getClient().create(MovieApi.class);
         movieApi.findOnTheAirTv(API_KEY)
                 .subscribeOn(Schedulers.io())
@@ -99,6 +96,7 @@ public class FragmentTvShow extends Fragment {
                     public void onSuccess(Scraper<TV> movieScraper) {
                         initData(movieScraper.getResultTvShow());
                     }
+
                     @Override
                     public void onError(Throwable e) {
 
@@ -106,7 +104,7 @@ public class FragmentTvShow extends Fragment {
                 });
     }
 
-    private void initData(List<TV> TV){
+    private void initData(List<TV> TV) {
         movieList.clear();
         movieList.addAll(TV);
         listMovieAdapter.notifyDataSetChanged();
@@ -115,11 +113,10 @@ public class FragmentTvShow extends Fragment {
     }
 
 
-
     @Override
     public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
-        savedInstanceState.putParcelableArrayList(STATE_RESULT,list);
+        savedInstanceState.putParcelableArrayList(STATE_RESULT, list);
     }
 
 

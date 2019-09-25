@@ -16,6 +16,7 @@ import java.util.Objects;
 
 public class DetailTVActivity extends AppCompatActivity {
     public static final  String EXTRA_TV = "EXTRA_TV";
+    public  static  final String TID = "tv_id";
 
 
 
